@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-@\=';
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/letex-garmindo/';
+$config['base_url'] = 'http://localhost:8888/letex-garmindo/';
 
 /*
 |--------------------------------------------------------------------------
