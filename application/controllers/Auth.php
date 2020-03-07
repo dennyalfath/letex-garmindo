@@ -36,6 +36,7 @@ class Auth extends CI_Controller
                     if ($qad->block == 'N') {
                         $sess_data['user_id'] = $qad->user_id;
                         $sess_data['username'] = $username;
+                        $sess_data['role'] = $qad->role;
                         $this->session->set_userdata($sess_data);
                         redirect(base_url('company'));
                     } else {
@@ -87,6 +88,7 @@ class Auth extends CI_Controller
         $this->session->unset_userdata(array(
             'user_id',
             'username',
+            'role'
         ));
 
         redirect(base_url());

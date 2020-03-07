@@ -212,6 +212,16 @@ with font-awesome or any other icon font library -->
                                 </li>
                             </ul>
                         </li>
+                        <?php if ($this->session->userdata('role') == 'admin') : ?>
+                            <li class="nav-item">
+                                <a href="<?php echo base_url('admin/usermanage') ?>" class="nav-link">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Manajemen User
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
