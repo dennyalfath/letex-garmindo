@@ -66,4 +66,15 @@ class Superadmin extends CI_Controller
             redirect(base_url('superadmin/edituser/' . $id));
         }
     }
+
+    public function deleteuser($id)
+    {
+        if ($this->users_m->delete_user($id)) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
+            redirect(base_url('superadmin/usermanage'));
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal dihapus!</div>');
+            redirect(base_url('superadmin/usermanage'));
+        }
+    }
 }

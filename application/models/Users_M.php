@@ -32,4 +32,10 @@ class Users_M extends CI_Model
         $this->db->where('user_id', $id);
         return $this->db->update('tb_user', $data);
     }
+
+    public function delete_user($id)
+    {
+        $this->db->where('user_id', $id);
+        return $this->db->delete('tb_user');
+    }
 }

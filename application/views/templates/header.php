@@ -94,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="<?php echo base_url() . $this->session->userdata('role') ?>" class="nav-link active">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
                                 </p>
@@ -103,7 +103,7 @@ with font-awesome or any other icon font library -->
                         <?php if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'manager' || $this->session->userdata('role') == 'superadmin') : ?>
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <i class="nav-icon fas fa-building"></i>
                                     <p>
                                         Perusahaan
                                         <i class="right fas fa-angle-left"></i>
@@ -126,7 +126,7 @@ with font-awesome or any other icon font library -->
                             </li>
                             <li class="nav-item has-treeview">
                                 <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <i class="nav-icon fas fa-user-tie"></i>
                                     <p>
                                         Client
                                         <i class="right fas fa-angle-left"></i>
@@ -143,6 +143,29 @@ with font-awesome or any other icon font library -->
                                         <a href="<?php echo base_url('client/add') ?>" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Tambah Client</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-box"></i>
+                                    <p>
+                                        Produk
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?php echo base_url('product') ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>List</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?php echo base_url('product/add') ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Tambah Produk</p>
                                         </a>
                                     </li>
                                 </ul>

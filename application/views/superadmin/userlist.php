@@ -28,7 +28,7 @@
                                     -
                                 <?php else : ?>
                                     <a href="<?php echo base_url('superadmin/edituser/') . $us->user_id ?>" class="btn btn-sm btn-warning">Edit</a>
-                                    <a href="<?php echo base_url('superadmin/deleteuser/') . $us->user_id ?>" class="btn btn-sm btn-danger">Delete</a>
+                                    <a href="<?php echo base_url('superadmin/deleteuser/') . $us->user_id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Anda yakin?');">Delete</a>
                                 <?php endif; ?>
                             </td>
                         </tr>
