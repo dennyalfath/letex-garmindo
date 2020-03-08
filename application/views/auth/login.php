@@ -30,6 +30,7 @@
       <div class="card-body login-card-body">
         <p class="login-box-msg">Login Form</p>
         <?php echo $this->session->flashdata('message') ?>
+        <?php echo validation_errors('<div class="alert alert-danger" role="alert">', '</div>') ?>
         <form action="<?php echo base_url('auth/login') ?>" method="post">
           <div class="input-group mb-3">
             <input type="text" name="username" class="form-control" placeholder="Username">

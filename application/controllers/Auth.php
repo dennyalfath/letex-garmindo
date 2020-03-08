@@ -18,12 +18,22 @@ class Auth extends CI_Controller
     public function login()
     {
         // Melakukan validasi input username dan password
-        $this->form_validation->set_rules('username', 'Username', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules(
+            'username',
+            'Username',
+            'required',
+            array('required' => 'Username harus diisi')
+        );
+        $this->form_validation->set_rules(
+            'password',
+            'Password',
+            'required',
+            array('required' => 'Password harus diisi')
+        );
 
         // Jika validasi input username dan password bernilai false maka user/admin diminta melakukan input ulang
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth');
+            $this->load->view('auth/login');
             // Menampilkan halaman utama login
         } else {
             // Input username dan password dengan fungsi POST 
@@ -38,7 +48,19 @@ class Auth extends CI_Controller
                         $sess_data['username'] = $username;
                         $sess_data['role'] = $qad->role;
                         $this->session->set_userdata($sess_data);
-                        redirect(base_url('company'));
+                        if ($qad->role == 'superadmin') {
+                            redirect(base_url('superadmin'));
+                        } else if ($qad->role == 'admin') {
+                            redirect(base_url('admin'));
+                        } else if ($qad->role == 'manager') {
+                            redirect(base_url('manager'));
+                        } else if ($qad->role == 'drafter') {
+                            redirect(base_url('drafter'));
+                        } else if ($qad->role == 'tailor') {
+                            redirect(base_url('tailor'));
+                        } else if ($qad->role == 'packing') {
+                            redirect(base_url('packing'));
+                        }
                     } else {
                         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun anda belum divalidasi!</div>');
                         redirect(base_url('auth'));
@@ -59,8 +81,18 @@ class Auth extends CI_Controller
     public function register_act()
     {
         // Validasi form input
-        $this->form_validation->set_rules('username', 'Username', 'required|trim');
-        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]');
+        $this->form_validation->set_rules(
+            'username',
+            'Username',
+            'required|trim',
+            array('required' => 'Username harus diisi')
+        );
+        $this->form_validation->set_rules(
+            'password',
+            'Password',
+            'required|trim|min_length[6]',
+            array('required' => 'Password harus diisi', 'min_length' => 'Password harus minimal 6 karakter')
+        );
 
         // Ambil data dari form input
         $data = array(
@@ -69,8 +101,9 @@ class Auth extends CI_Controller
         );
 
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data harus diisi lengkap!</div>');
-            redirect(base_url('auth/register'));
+            $this->load->view('auth/register');
+            // $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data harus diisi lengkap!</div>');
+            // redirect(base_url('auth/register'));
         } else {
             // Simpan data ke database
             if ($this->users_m->insert_user($data)) {
