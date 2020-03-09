@@ -7,6 +7,12 @@ class Company extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        if ($this->session->userdata('username') != '' && $this->session->userdata('role') == 'superadmin') {
+        } else if ($this->session->userdata('username') != '' && $this->session->userdata('role') == 'manager') {
+        } else if ($this->session->userdata('username') != '' && $this->session->userdata('role') == 'admin') {
+        } else {
+            show_404();
+        }
         $this->load->library('form_validation');
         $this->load->model('company_m');
     }
