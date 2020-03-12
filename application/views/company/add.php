@@ -2,7 +2,7 @@
 <div class="content">
     <div class="container-fluid">
         <?php echo $this->session->flashdata('message') ?>
-        <form action="<?php echo base_url('company/store') ?>" method="POST">
+        <form action="<?php echo base_url('company/store') ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="company_name">Nama Perusahaan:</label>
                 <input type="text" class="form-control" name="company_name">

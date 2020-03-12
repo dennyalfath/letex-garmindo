@@ -53,7 +53,8 @@ class Company extends CI_Controller
                 'company_name' => $this->input->post('company_name'),
                 'company_contact' => $this->input->post('company_contact'),
                 'company_address' => $this->input->post('company_address'),
-                'company_status' => $this->input->post('company_status')
+                'company_status' => $this->input->post('company_status'),
+                'company_logo' => $this->upload_logo()
             );
 
             if ($this->company_m->insert_company($data)) {
@@ -92,7 +93,8 @@ class Company extends CI_Controller
                 'company_name' => $this->input->post('company_name'),
                 'company_contact' => $this->input->post('company_contact'),
                 'company_address' => $this->input->post('company_address'),
-                'company_status' => $this->input->post('company_status')
+                'company_status' => $this->input->post('company_status'),
+                'company_logo' => $this->upload_logo()
             );
 
             if ($this->company_m->update_company($id, $data)) {
@@ -113,6 +115,22 @@ class Company extends CI_Controller
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal dihapus!</div>');
             redirect(base_url('company'));
+        }
+    }
+
+    public function upload_logo()
+    {
+        $config['upload_path']          = './uploads/company-logo';
+        $config['allowed_types']        = 'jpg|png';
+        $config['max_size']             = 3000;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('company_logo')) {
+            $error = array('error' => $this->upload->display_errors());
+            $this->load->view('company/add', $error);
+        } else {
+            return $this->upload->data('file_name');
         }
     }
 }
