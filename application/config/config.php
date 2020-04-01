@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+date_default_timezone_set("Asia/Jakarta");
 // $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-@\=';
 /*
 |--------------------------------------------------------------------------

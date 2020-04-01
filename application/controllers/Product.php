@@ -15,6 +15,8 @@ class Product extends CI_Controller
         }
         $this->load->library('form_validation');
         $this->load->model('product_m');
+        $this->load->model('client_m');
+        $this->load->model('category_m');
     }
     public function index()
     {
@@ -30,7 +32,9 @@ class Product extends CI_Controller
     public function add()
     {
         $data = array(
-            'title' => 'Tambah Produk'
+            'title' => 'Add Product',
+            'client' => $this->client_m->get_client_list(),
+            'category' => $this->category_m->get_all_category()
         );
 
         $this->load->view('templates/header', $data);
@@ -38,81 +42,108 @@ class Product extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    // public function store()
-    // {
-    //     $this->form_validation->set_rules('company_name', 'Nama Perusahaan', 'required');
-    //     $this->form_validation->set_rules('company_contact', 'No. Telp', 'required');
-    //     $this->form_validation->set_rules('company_address', 'Alamat', 'required');
-    //     $this->form_validation->set_rules('company_status', 'Status', 'required');
+    public function store()
+    {
+        $this->form_validation->set_rules('pr_name', 'Product Name', 'required');
+        $this->form_validation->set_rules('pr_client', 'Client', 'required');
+        $this->form_validation->set_rules('pr_category', 'Category', 'required');
+        $this->form_validation->set_rules('sell_price', 'Sell Price', 'required');
 
-    //     if ($this->form_validation->run() == FALSE) {
-    //         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Tidak boleh ada data kosong!</div>');
-    //         redirect(base_url('company/add'));
-    //     } else {
-    //         $data = array(
-    //             'company_name' => $this->input->post('company_name'),
-    //             'company_contact' => $this->input->post('company_contact'),
-    //             'company_address' => $this->input->post('company_address'),
-    //             'company_status' => $this->input->post('company_status')
-    //         );
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Empty value is not allowed!</div>');
+            redirect(base_url('product/add'));
+        } else {
+            $data = array(
+                'client_id' => $this->input->post('pr_client'),
+                'cat_id' => $this->input->post('pr_category'),
+                'pr_name' => $this->input->post('pr_name'),
+                'style' => $this->input->post('style'),
+                'sell_price' => $this->input->post('sell_price'),
+                'pr_description' => $this->input->post('desc'),
+                'pr_picture' => $this->upload_image()
+            );
 
-    //         if ($this->company_m->insert_company($data)) {
-    //             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
-    //             redirect(base_url('company'));
-    //         } else {
-    //             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal disimpan!</div>');
-    //             redirect(base_url('company/add'));
-    //         }
-    //     }
-    // }
+            if ($this->product_m->insert_product($data)) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data saved!</div>');
+                redirect(base_url('product'));
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to save data!</div>');
+                redirect(base_url('product/add'));
+            }
+        }
+    }
 
-    // public function edit($id)
-    // {
-    //     $data = array(
-    //         'title' => 'Edit Data Perusahaan',
-    //         'company' => $this->company_m->get_company_by_id($id)
-    //     );
-    //     $this->load->view('templates/header', $data);
-    //     $this->load->view('company/edit');
-    //     $this->load->view('templates/footer');
-    // }
+    public function upload_image()
+    {
+        $config['upload_path']          = './uploads/product-image';
+        $config['allowed_types']        = 'jpg|jpeg|png';
+        $config['max_size']             = 3000;
 
-    // public function update($id)
-    // {
-    //     $this->form_validation->set_rules('company_name', 'Company Name', 'required');
-    //     $this->form_validation->set_rules('company_contact', 'Contact', 'required');
-    //     $this->form_validation->set_rules('company_address', 'Address', 'required');
-    //     $this->form_validation->set_rules('company_status', 'Status', 'required');
+        $this->load->library('upload', $config);
 
-    //     if ($this->form_validation->run() == FALSE) {
-    //         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Tidak boleh ada data kosong!</div>');
-    //         redirect(base_url('company/edit/' . $id));
-    //     } else {
-    //         $data = array(
-    //             'company_name' => $this->input->post('company_name'),
-    //             'company_contact' => $this->input->post('company_contact'),
-    //             'company_address' => $this->input->post('company_address'),
-    //             'company_status' => $this->input->post('company_status')
-    //         );
+        if (!$this->upload->do_upload('pr_image')) {
+            $error = array('error' => $this->upload->display_errors());
+            $this->load->view('company/add', $error);
+        } else {
+            return $this->upload->data('file_name');
+        }
+    }
 
-    //         if ($this->company_m->update_company($id, $data)) {
-    //             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diubah!</div>');
-    //             redirect(base_url('company'));
-    //         } else {
-    //             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal diubah!</div>');
-    //             redirect(base_url('company/edit/' . $id));
-    //         }
-    //     }
-    // }
+    public function edit($id)
+    {
+        $product = $this->product_m->get_product_by_id($id);
+        $data = array(
+            'title' => 'Modify Product Data',
+            'product' => $product,
+            'client' => $this->client_m->get_client_list(),
+            'category' => $this->category_m->get_all_category(),
+            'clientpil' => $product->client_id,
+            'categorypil' => $product->cat_id
+        );
+        $this->load->view('templates/header', $data);
+        $this->load->view('product/edit');
+        $this->load->view('templates/footer');
+    }
 
-    // public function destroy($id)
-    // {
-    //     if ($this->company_m->delete_company($id)) {
-    //         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
-    //         redirect(base_url('company'));
-    //     } else {
-    //         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal dihapus!</div>');
-    //         redirect(base_url('company'));
-    //     }
-    // }
+    public function update($id)
+    {
+        $this->form_validation->set_rules('pr_name', 'Product Name', 'required');
+        $this->form_validation->set_rules('pr_client', 'Client', 'required');
+        $this->form_validation->set_rules('pr_category', 'Category', 'required');
+        $this->form_validation->set_rules('sell_price', 'Sell Price', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Empty value is not allowed!</div>');
+            redirect(base_url('product/edit/' . $id));
+        } else {
+            $data = array(
+                'client_id' => $this->input->post('pr_client'),
+                'cat_id' => $this->input->post('pr_category'),
+                'pr_name' => $this->input->post('pr_name'),
+                'style' => $this->input->post('style'),
+                'sell_price' => $this->input->post('sell_price'),
+                'pr_description' => $this->input->post('desc'),
+                'pr_picture' => $this->upload_image()
+            );
+
+            if ($this->company_m->update_product($id, $data)) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data updated!</div>');
+                redirect(base_url('product'));
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to update data!</div>');
+                redirect(base_url('product/edit/' . $id));
+            }
+        }
+    }
+
+    public function destroy($id)
+    {
+        if ($this->product_m->delete_product($id)) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data deleted!</div>');
+            redirect(base_url('product'));
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to delete data!</div>');
+            redirect(base_url('product'));
+        }
+    }
 }

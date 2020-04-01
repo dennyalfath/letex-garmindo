@@ -9,10 +9,22 @@ class Client_M extends CI_Model
         return $this->db->get('tb_client')->result();
     }
 
+    public function get_client_list()
+    {
+        $this->db->select('client_id, client_name');
+        return $this->db->get('tb_client')->result();
+    }
+
     public function get_client_by_id($id)
     {
         $this->db->where('client_id', $id);
         return $this->db->get('tb_client')->row();
+    }
+
+    public function get_client_by_cpid($cpid)
+    {
+        $this->db->where('company_id', $cpid);
+        return $this->db->get('tb_client')->result();
     }
 
     public function insert_client($data)

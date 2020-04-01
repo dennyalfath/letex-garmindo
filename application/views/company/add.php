@@ -4,22 +4,22 @@
         <?php echo $this->session->flashdata('message') ?>
         <form action="<?php echo base_url('company/store') ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="company_name">Nama Perusahaan:</label>
-                <input type="text" class="form-control" name="company_name">
+                <label for="company_name">Company Name:</label>
+                <input type="text" class="form-control" name="company_name" required>
             </div>
             <div class="form-group">
-                <label for="company_address">No. Telp:</label>
-                <input type="text" class="form-control" name="company_contact">
+                <label for="company_address">Company Contact:</label>
+                <input type="text" class="form-control" name="company_contact" required>
             </div>
             <div class="form-group">
-                <label for="company_contact">Alamat:</label>
-                <input type="text" class="form-control" name="company_address">
+                <label for="company_contact">Company Address:</label>
+                <input type="text" class="form-control" name="company_address" required>
             </div>
             <div class="form-group">
                 <label for="company_status">Status:</label>
                 <select name="company_status" class="form-control">
-                    <option value="Active">Aktif</option>
-                    <option value="Inactive">Tidak Aktif</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
                 </select>
             </div>
             <div class="form-group">

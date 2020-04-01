@@ -8,6 +8,12 @@ class Company_M extends CI_Model
         return $this->db->get('tb_company')->result();
     }
 
+    public function get_company_list()
+    {
+        $this->db->select('company_id, company_name');
+        return $this->db->get('tb_company')->result();
+    }
+
     public function get_company_by_id($id)
     {
         $this->db->where('company_id', $id);

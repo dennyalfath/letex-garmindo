@@ -3,15 +3,18 @@
     <div class="container-fluid">
         <?php echo $this->session->flashdata('message') ?>
         <div class="table-responsive">
-            <table class="table table-hover text-center">
+            <table class="table table-hover text-center" id="data-table">
                 <thead>
-                    <th>#</th>
-                    <th>Produk</th>
-                    <th>Client</th>
-                    <th>Kategori</th>
-                    <th>Style</th>
-                    <th>Harga Jual</th>
-                    <th>Aksi</th>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Client</th>
+                        <th>Category</th>
+                        <th>Style</th>
+                        <th>Sell Price</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1 ?>
@@ -23,11 +26,11 @@
                             <td><?php echo $pr->cat_name ?></td>
                             <td><?php echo $pr->style ?></td>
                             <td><?php echo $pr->sell_price ?></td>
+                            <td width="10%"><img src="<?php echo base_url('uploads/product-image/' . $pr->pr_picture) ?>" width="60%"></td>
                             <td>
-                                <a href="<?php echo base_url('company/edit/' . $pr->company_id) ?>" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="<?php echo base_url('company/destroy/' . $pr->company_id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?');">Hapus</a>
+                                <a href="<?php echo base_url('product/edit/' . $pr->pr_id) ?>" class="btn btn-sm btn-warning">Modify</a>
+                                <a href="<?php echo base_url('product/destroy/' . $pr->pr_id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
                             </td>
-                            <td></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

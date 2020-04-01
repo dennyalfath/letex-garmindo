@@ -4,20 +4,32 @@
         <?php echo $this->session->flashdata('message') ?>
         <form action="<?php echo base_url('client/store') ?>" method="POST">
             <div class="form-group">
-                <label for="client_name">Nama Client:</label>
-                <input type="text" class="form-control" name="client_name">
+                <label for="client_name">Client Name:</label>
+                <input type="text" class="form-control" name="client_name" required>
             </div>
             <div class="form-group">
-                <label for="client_contact">No. Telp:</label>
-                <input type="text" class="form-control" name="client_contact">
+                <label for="client_code">Client Code:</label>
+                <input type="text" class="form-control" name="client_code" required>
             </div>
             <div class="form-group">
-                <label for="company">Perusahaan:</label>
-                <select name="company" class="form-control">
+                <label for="client_contact">Client Contact:</label>
+                <input type="text" class="form-control" name="client_contact" required>
+            </div>
+            <div class="form-group">
+                <label for="company">Company:</label>
+                <select name="company" class="form-control" required>
                     <?php foreach ($company as $cp) : ?>
                         <option value="<?php echo $cp->company_id ?>"><?php echo $cp->company_name ?></option>
                     <?php endforeach; ?>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="client_sonum">Client SO Number:</label>
+                <input type="text" class="form-control" name="client_sonum">
+            </div>
+            <div class="form-group">
+                <label for="client_invnum">Client Invoice Number:</label>
+                <input type="text" class="form-control" name="client_invnum">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Save</button>

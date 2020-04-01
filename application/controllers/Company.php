@@ -15,12 +15,20 @@ class Company extends CI_Controller
         }
         $this->load->library('form_validation');
         $this->load->model('company_m');
+        $this->load->model('client_m');
     }
     public function index()
     {
+        $company = $this->company_m->get_all_company();
+        $client = array();
+        foreach ($company as $cp) {
+            $client[$cp->company_id] = $this->client_m->get_client_by_cpid($cp->company_id);
+        }
+
         $data = array(
-            'title' => 'Daftar Perusahaan',
-            'company' => $this->company_m->get_all_company()
+            'title' => 'Company List',
+            'company' => $company,
+            'client' => $client
         );
         $this->load->view('templates/header', $data);
         $this->load->view('company/index');
@@ -30,7 +38,7 @@ class Company extends CI_Controller
     public function add()
     {
         $data = array(
-            'title' => 'Tambah Perusahaan',
+            'title' => 'Add Company',
         );
 
         $this->load->view('templates/header', $data);
@@ -40,9 +48,9 @@ class Company extends CI_Controller
 
     public function store()
     {
-        $this->form_validation->set_rules('company_name', 'Nama Perusahaan', 'required');
-        $this->form_validation->set_rules('company_contact', 'No. Telp', 'required');
-        $this->form_validation->set_rules('company_address', 'Alamat', 'required');
+        $this->form_validation->set_rules('company_name', 'Company Name', 'required');
+        $this->form_validation->set_rules('company_contact', 'Company Contact', 'required');
+        $this->form_validation->set_rules('company_address', 'Company Address', 'required');
         $this->form_validation->set_rules('company_status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {

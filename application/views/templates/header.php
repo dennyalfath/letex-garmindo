@@ -18,6 +18,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Datatables CSS -->
+    <link href="<?php echo base_url() ?>assets/dist/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -93,7 +95,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- Add icons to the links using the .nav-icon class
                             with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="<?php echo base_url() . $this->session->userdata('role') ?>" class="nav-link active">
+                            <a href="<?php echo base_url() . $this->session->userdata('role') ?>" class="nav-link <?php if ($this->uri->segment(1) == $this->session->userdata('role') && $this->uri->segment(2) == '') {
+                                                                                                                        echo 'active';
+                                                                                                                    } ?>">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -102,10 +106,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <?php if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'manager' || $this->session->userdata('role') == 'superadmin') : ?>
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link <?php if ($this->uri->segment(1) == 'company') {
+                                                                echo 'active';
+                                                            } ?>">
                                     <i class="nav-icon fas fa-building"></i>
                                     <p>
-                                        Perusahaan
+                                        Company
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -119,13 +125,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li class="nav-item">
                                         <a href="<?php echo base_url('company/add') ?>" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Tambah Perusahaan</p>
+                                            <p>Add Company</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link <?php if ($this->uri->segment(1) == 'client') {
+                                                                echo 'active';
+                                                            } ?>">
                                     <i class="nav-icon fas fa-user-tie"></i>
                                     <p>
                                         Client
@@ -142,16 +150,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li class="nav-item">
                                         <a href="<?php echo base_url('client/add') ?>" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Tambah Client</p>
+                                            <p>Add Client</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link <?php if ($this->uri->segment(1) == 'category') {
+                                                                echo 'active';
+                                                            } ?>">
+                                    <i class="nav-icon fas fa-bookmark"></i>
+                                    <p>
+                                        Category
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?php echo base_url('category') ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>List</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?php echo base_url('category/add') ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Add Category</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link <?php if ($this->uri->segment(1) == 'product') {
+                                                                echo 'active';
+                                                            } ?>">
                                     <i class="nav-icon fas fa-box"></i>
                                     <p>
-                                        Produk
+                                        Product
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -165,7 +200,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li class="nav-item">
                                         <a href="<?php echo base_url('product/add') ?>" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>Tambah Produk</p>
+                                            <p>Add Product</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -173,10 +208,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <?php endif; ?>
                         <?php if ($this->session->userdata('role') == 'superadmin') : ?>
                             <li class="nav-item">
-                                <a href="<?php echo base_url('superadmin/usermanage') ?>" class="nav-link">
+                                <a href="<?php echo base_url('superadmin/usermanage') ?>" class="nav-link <?php if ($this->uri->segment(1) == 'superadmin' && $this->uri->segment(2) == 'usermanage') {
+                                                                                                                echo 'active';
+                                                                                                            } ?>">
                                     <i class="nav-icon fas fa-user"></i>
                                     <p>
-                                        Manajemen User
+                                        User Management
                                     </p>
                                 </a>
                             </li>

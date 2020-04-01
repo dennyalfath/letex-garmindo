@@ -35,13 +35,26 @@
 <!-- jQuery -->
 <!-- <script src="<?php echo base_url() ?>assets/plugins/jquery/jquery.min.js"></script> -->
 <script src="<?php echo base_url() ?>assets/dist/js/jquery-3.4.1.min.js"></script>
-<!-- Datatables -->
-<script src="<?php echo base_url() ?>assets/dist/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="<?php echo base_url() ?>assets/dist/datatables/js/jquery.dataTables.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?php echo base_url() ?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url() ?>assets/dist/js/adminlte.min.js"></script>
+<!-- Datatables -->
+<script src="<?php echo base_url() ?>assets/dist/datatables/jquery.dataTables.js"></script>
+<script src="<?php echo base_url() ?>assets/dist/datatables/dataTables.bootstrap4.js"></script>
+
+<!-- Additional Javascripts -->
+<script>
+    $(function() {
+        $("#data-table").DataTable({
+            "paging": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "pageLength": 20,
+        });
+    });
+</script>
 
 </body>
 
