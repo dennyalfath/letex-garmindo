@@ -21,7 +21,7 @@ class Product extends CI_Controller
     public function index()
     {
         $data = array(
-            'title' => 'Daftar Produk',
+            'title' => 'Product List',
             'product' => $this->product_m->get_all_products()
         );
         $this->load->view('templates/header', $data);
@@ -73,11 +73,12 @@ class Product extends CI_Controller
         }
     }
 
-    public function upload_image()
+    public function upload_image($pr_id = null)
     {
         $config['upload_path']          = './uploads/product-image';
         $config['allowed_types']        = 'jpg|jpeg|png';
         $config['max_size']             = 3000;
+        $config['overwrite']            = true;
 
         $this->load->library('upload', $config);
 
@@ -116,17 +117,29 @@ class Product extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Empty value is not allowed!</div>');
             redirect(base_url('product/edit/' . $id));
         } else {
-            $data = array(
-                'client_id' => $this->input->post('pr_client'),
-                'cat_id' => $this->input->post('pr_category'),
-                'pr_name' => $this->input->post('pr_name'),
-                'style' => $this->input->post('style'),
-                'sell_price' => $this->input->post('sell_price'),
-                'pr_description' => $this->input->post('desc'),
-                'pr_picture' => $this->upload_image()
-            );
+            $pr_picture = $this->upload_image($id);
+            if ($pr_picture) {
+                $data = array(
+                    'client_id' => $this->input->post('pr_client'),
+                    'cat_id' => $this->input->post('pr_category'),
+                    'pr_name' => $this->input->post('pr_name'),
+                    'style' => $this->input->post('style'),
+                    'sell_price' => $this->input->post('sell_price'),
+                    'pr_description' => $this->input->post('desc'),
+                    'pr_picture' => $pr_picture
+                );
+            } else {
+                $data = array(
+                    'client_id' => $this->input->post('pr_client'),
+                    'cat_id' => $this->input->post('pr_category'),
+                    'pr_name' => $this->input->post('pr_name'),
+                    'style' => $this->input->post('style'),
+                    'sell_price' => $this->input->post('sell_price'),
+                    'pr_description' => $this->input->post('desc')
+                );
+            }
 
-            if ($this->company_m->update_product($id, $data)) {
+            if ($this->product_m->update_product($id, $data)) {
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data updated!</div>');
                 redirect(base_url('product'));
             } else {

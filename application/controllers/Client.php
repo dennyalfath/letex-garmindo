@@ -61,10 +61,10 @@ class Client extends CI_Controller
             );
 
             if ($this->client_m->insert_client($data)) {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data saved!</div>');
                 redirect(base_url('client'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal disimpan!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to save data!</div>');
                 redirect(base_url('client/add'));
             }
         }

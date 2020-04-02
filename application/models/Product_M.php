@@ -23,8 +23,31 @@ class Product_M extends CI_Model
         return $this->db->insert('tb_product', $data);
     }
 
+    public function update_product($id, $data)
+    {
+        if ($data['pr_picture'] != NULL || $data['pr_picture'] != '') {
+            $this->db->where('pr_id', $id);
+            $row = $this->db->get('tb_product')->row();
+            $img_path = './uploads/product-image/' . $row->pr_picture;
+            if (file_exists($img_path)) {
+                unlink($img_path);
+                $this->db->where('pr_id', $id);
+                return $this->db->update('tb_product', $data);
+            }
+        } else {
+            $this->db->where('pr_id', $id);
+            return $this->db->update('tb_product', $data);
+        }
+    }
+
     public function delete_product($id)
     {
+        $this->db->where('pr_id', $id);
+        $row = $this->db->get('tb_product')->row();
+        $img_path = './uploads/product-image/' . $row->pr_picture;
+        if (file_exists($img_path)) {
+            unlink($img_path);
+        }
         $this->db->where('pr_id', $id);
         return $this->db->delete('tb_product');
     }

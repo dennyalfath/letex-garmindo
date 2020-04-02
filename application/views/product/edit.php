@@ -2,7 +2,7 @@
 <div class="content">
     <div class="container-fluid">
         <?php echo $this->session->flashdata('message') ?>
-        <form action="<?php echo base_url('product/store') ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?php echo base_url('product/update/' . $product->pr_id) ?>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="pr_name">Product Name:</label>
                 <input type="text" class="form-control" name="pr_name" value="<?php echo $product->pr_name ?>" required>
@@ -43,7 +43,7 @@
             </div>
             <div class="form-group">
                 <label for="pr_image">Image:</label><br>
-                <p><input type="text" value="<?php echo $product->pr_picture ?>" readonly></p>
+                <p><input type="text" placeholder="<?php echo $product->pr_picture ?>" readonly></p>
                 <input type="file" name="pr_image" size="20">
             </div>
             <div class="form-group">

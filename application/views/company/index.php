@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <?php echo $this->session->flashdata('message') ?>
         <div class="table-responsive">
-            <table class="table table-hover text-center" id="company">
+            <table class="table table-hover text-center" id="data-table">
                 <thead>
                     <tr>
                         <th>No</th>
