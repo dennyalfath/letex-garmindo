@@ -8,12 +8,20 @@
                 <input type="text" class="form-control" name="company_name" required>
             </div>
             <div class="form-group">
+                <label for="company_code">Company Code:</label>
+                <input type="text" class="form-control" name="company_code" required>
+            </div>
+            <div class="form-group">
                 <label for="company_address">Company Contact:</label>
                 <input type="text" class="form-control" name="company_contact" required>
             </div>
             <div class="form-group">
                 <label for="company_contact">Company Address:</label>
                 <input type="text" class="form-control" name="company_address" required>
+            </div>
+            <div class="form-group">
+                <label for="so_number">SO Number:</label>
+                <input type="number" class="form-control" name="so_number" required>
             </div>
             <div class="form-group">
                 <label for="company_status">Status:</label>

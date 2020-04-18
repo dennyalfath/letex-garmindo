@@ -49,8 +49,10 @@ class Company extends CI_Controller
     public function store()
     {
         $this->form_validation->set_rules('company_name', 'Company Name', 'required');
+        $this->form_validation->set_rules('company_code', 'Company Code', 'required');
         $this->form_validation->set_rules('company_contact', 'Company Contact', 'required');
         $this->form_validation->set_rules('company_address', 'Company Address', 'required');
+        $this->form_validation->set_rules('so_number', 'SO Number', 'required');
         $this->form_validation->set_rules('company_status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -59,14 +61,18 @@ class Company extends CI_Controller
         } else {
             $data = array(
                 'company_name' => $this->input->post('company_name'),
+                'company_code' => $this->input->post('company_code'),
                 'company_contact' => $this->input->post('company_contact'),
                 'company_address' => $this->input->post('company_address'),
+                'so_number' => $this->input->post('so_number'),
                 'company_status' => $this->input->post('company_status'),
                 'company_logo' => $this->upload_logo()
             );
 
-            if ($this->company_m->insert_company($data)) {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
+            $response = $this->company_m->insert_company($data);
+
+            if (!$response->error) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">'. $response->message .'</div>');
                 redirect(base_url('company'));
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal disimpan!</div>');
@@ -89,23 +95,42 @@ class Company extends CI_Controller
     public function update($id)
     {
         $this->form_validation->set_rules('company_name', 'Company Name', 'required');
+        $this->form_validation->set_rules('company_code', 'Company Code', 'required');
         $this->form_validation->set_rules('company_contact', 'Contact', 'required');
         $this->form_validation->set_rules('company_address', 'Address', 'required');
+        $this->form_validation->set_rules('so_number', 'SO Number', 'required');
         $this->form_validation->set_rules('company_status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Tidak boleh ada data kosong!</div>');
             redirect(base_url('company/edit/' . $id));
         } else {
-            $data = array(
-                'company_name' => $this->input->post('company_name'),
-                'company_contact' => $this->input->post('company_contact'),
-                'company_address' => $this->input->post('company_address'),
-                'company_status' => $this->input->post('company_status'),
-                'company_logo' => $this->upload_logo()
-            );
-
-            if ($this->company_m->update_company($id, $data)) {
+            $company_logo = $this->upload_logo();
+            if ($company_logo) {
+                $data = array(
+                    'company_id' => $id,
+                    'company_name' => $this->input->post('company_name'),
+                    'company_code' => $this->input->post('company_code'),
+                    'company_contact' => $this->input->post('company_contact'),
+                    'company_address' => $this->input->post('company_address'),
+                    'so_number' => $this->input->post('so_number'),
+                    'company_status' => $this->input->post('company_status'),
+                    'company_logo' => $company_logo
+                );
+            }
+            else {
+                $data = array(
+                    'company_id' => $id,
+                    'company_name' => $this->input->post('company_name'),
+                    'company_code' => $this->input->post('company_code'),
+                    'company_contact' => $this->input->post('company_contact'),
+                    'company_address' => $this->input->post('company_address'),
+                    'so_number' => $this->input->post('so_number'),
+                    'company_status' => $this->input->post('company_status'),
+                    'company_logo' => ''
+                );
+            }
+            if ($this->company_m->update_company($data)) {
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diubah!</div>');
                 redirect(base_url('company'));
             } else {

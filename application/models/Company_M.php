@@ -5,7 +5,17 @@ class Company_M extends CI_Model
 {
     public function get_all_company()
     {
-        return $this->db->get('tb_company')->result();
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/company/read.php",
+            CURLOPT_RETURNTRANSFER => true,
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function get_company_list()
@@ -16,24 +26,76 @@ class Company_M extends CI_Model
 
     public function get_company_by_id($id)
     {
-        $this->db->where('company_id', $id);
-        return $this->db->get('tb_company')->row();
+        $curl = curl_init();
+        $data = array(
+            'company_id' => $id
+        );
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/company/read.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function insert_company($data)
     {
-        return $this->db->insert('tb_company', $data);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/company/insert.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
-    public function update_company($id, $data)
+    public function update_company($data)
     {
-        $this->db->where('company_id', $id);
-        return $this->db->update('tb_company', $data);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/company/update.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function delete_company($id)
     {
-        $this->db->where('company_id', $id);
-        return $this->db->delete('tb_company');
+        $curl = curl_init();
+
+        $data = array(
+            'company_id' => $id
+        );
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/company/delete.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 }

@@ -68,6 +68,10 @@
                                 <input type="text" class="form-control" value="<?php echo $cp->company_address ?>" readonly>
                             </div>
                             <div class="form-group">
+                                <label for="cpso_number">SO Number:</label>
+                                <input type="number" class="form-control" value="<?php echo $cp->so_number ?>" readonly>
+                            </div>
+                            <div class="form-group">
                                 <label for="cpstatus">Company Status:</label>
                                 <input type="text" class="form-control" value="<?php echo $cp->company_status ?>" readonly>
                             </div>
