@@ -17,6 +17,7 @@ class Company extends CI_Controller
         $this->load->model('company_m');
         $this->load->model('client_m');
     }
+
     public function index()
     {
         $company = $this->company_m->get_all_company();
@@ -56,7 +57,7 @@ class Company extends CI_Controller
         $this->form_validation->set_rules('company_status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Tidak boleh ada data kosong!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Empty value is not allowed!</div>');
             redirect(base_url('company/add'));
         } else {
             $data = array(
@@ -75,7 +76,7 @@ class Company extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
                 redirect(base_url('company'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal disimpan!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Save failed!</div>');
                 redirect(base_url('company/add'));
             }
         }
@@ -102,7 +103,7 @@ class Company extends CI_Controller
         $this->form_validation->set_rules('company_status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Tidak boleh ada data kosong!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Empty value is not allowed!</div>');
             redirect(base_url('company/edit/' . $id));
         } else {
             $company_logo = $this->upload_logo();
@@ -125,15 +126,16 @@ class Company extends CI_Controller
                     'company_contact' => $this->input->post('company_contact'),
                     'company_address' => $this->input->post('company_address'),
                     'so_number' => $this->input->post('so_number'),
-                    'company_status' => $this->input->post('company_status'),
-                    'company_logo' => ''
+                    'company_status' => $this->input->post('company_status')
                 );
             }
-            if ($this->company_m->update_company($data)) {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diubah!</div>');
+            $response = $this->company_m->update_company($data);
+
+            if (!$response->error) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
                 redirect(base_url('company'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal diubah!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Save failed!</div>');
                 redirect(base_url('company/edit/' . $id));
             }
         }
@@ -142,10 +144,10 @@ class Company extends CI_Controller
     public function destroy($id)
     {
         if ($this->company_m->delete_company($id)) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Deleted successfully!</div>');
             redirect(base_url('company'));
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal dihapus!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Delete failed!</div>');
             redirect(base_url('company'));
         }
     }

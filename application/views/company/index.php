@@ -26,6 +26,9 @@
                             <td>
                                 <a href="<?php echo '#detailcompany' . $cp->company_id ?>" data-toggle="modal" class="btn btn-sm btn-primary">Detail</a>
                                 <a href="<?php echo base_url('company/edit/' . $cp->company_id) ?>" class="btn btn-sm btn-warning">Modify</a>
+                                <?php if ($this->session->userdata('role') == 'superadmin') : ?>
+                                    <a href="<?php echo base_url('company/destroy/' . $cp->company_id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
