@@ -76,7 +76,7 @@ class Company extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
                 redirect(base_url('company'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Save failed!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
                 redirect(base_url('company/add'));
             }
         }
@@ -126,16 +126,16 @@ class Company extends CI_Controller
                     'company_contact' => $this->input->post('company_contact'),
                     'company_address' => $this->input->post('company_address'),
                     'so_number' => $this->input->post('so_number'),
-                    'company_status' => $this->input->post('company_status')
+                    'company_status' => $this->input->post('company_status'),
+                    'company_logo' => ''
                 );
             }
             $response = $this->company_m->update_company($data);
-
             if (!$response->error) {
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
                 redirect(base_url('company'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Save failed!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
                 redirect(base_url('company/edit/' . $id));
             }
         }
@@ -143,11 +143,12 @@ class Company extends CI_Controller
 
     public function destroy($id)
     {
-        if ($this->company_m->delete_company($id)) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Deleted successfully!</div>');
+        $response = $this->company_m->delete_company($data);
+        if (!$response->error) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
             redirect(base_url('company'));
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Delete failed!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
             redirect(base_url('company'));
         }
     }
