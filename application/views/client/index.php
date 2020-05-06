@@ -27,7 +27,7 @@
                             <td><?php echo $cl->client_contact ?></td>
                             <td><?php echo date('d-m-Y', strtotime($cl->client_date_register)) ?></td>
                             <td><?php echo $cl->company_name ?></td>
-                            <td><?php echo $cl->so_number ?></td>
+                            <td><?php echo str_pad($cl->so_num, 3, '0', STR_PAD_LEFT) ?></td>
                             <td><?php echo $cl->invoice_number ?></td>
                             <td>
                                 <a href="<?php echo base_url('client/edit/' . $cl->client_id) ?>" class="btn btn-sm btn-warning">Modify</a>

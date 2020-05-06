@@ -86,7 +86,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="<?php echo base_url() ?>assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block"><?php echo $this->session->userdata('username') ?></a>
+                        <a href="#" class="d-block"><?php echo ucfirst($this->session->userdata('username')) ?></a>
                     </div>
                 </div>
 
@@ -202,6 +202,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <a href="<?php echo base_url('product/add') ?>" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Add Product</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="<?php echo base_url('salesorder') ?>" class="nav-link <?php if ($this->uri->segment(1) == 'salesorder') {
+                                                                                                    echo 'active';
+                                                                                                } ?>">
+                                    <i class="nav-icon fas fa-box"></i>
+                                    <p>
+                                        Sales Order
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="<?php echo base_url('salesorder') ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>List</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="<?php echo base_url('salesorder/add') ?>" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Add Sales Order</p>
                                         </a>
                                     </li>
                                 </ul>

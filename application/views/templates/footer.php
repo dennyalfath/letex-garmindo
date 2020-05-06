@@ -33,8 +33,8 @@
 </div>
 
 <!-- jQuery -->
-<!-- <script src="<?php echo base_url() ?>assets/plugins/jquery/jquery.min.js"></script> -->
 <script src="<?php echo base_url() ?>assets/dist/js/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?php echo base_url() ?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
@@ -44,6 +44,43 @@
 <script src="<?php echo base_url() ?>assets/dist/datatables/dataTables.bootstrap4.js"></script>
 
 <!-- Additional Javascripts -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#client').change(function() {
+            var client = $(this).val();
+
+            function formatted_string(pad, user_str, pad_pos) {
+                if (typeof user_str === 'undefined')
+                    return pad;
+                if (pad_pos == 'l') {
+                    return (pad + user_str).slice(-pad.length);
+                } else {
+                    return (user_str + pad).substring(0, pad.length);
+                }
+            }
+
+            //AJAX REQUEST
+            if (client) {
+                $.ajax({
+                    url: '<?php echo base_url('salesorder/getClient') ?>',
+                    method: 'post',
+                    data: {
+                        client: client
+                    },
+                    async: true,
+                    dataType: 'json',
+                    success: function(data) {
+                        //Add SO Number
+                        var soNum = parseInt(data['so_number']);
+                        soNum = soNum + 1;
+                        $('#so_number').val(formatted_string('000', soNum, 'l'));
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 <script>
     $(function() {
         $("#data-table").DataTable({

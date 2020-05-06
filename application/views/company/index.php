@@ -72,7 +72,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="cpso_number">SO Number:</label>
-                                <input type="number" class="form-control" value="<?php echo $cp->so_number ?>" readonly>
+                                <input type="number" class="form-control" value="<?php echo str_pad($cp->so_number, 3, '0', STR_PAD_LEFT) ?>" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="cpstatus">Company Status:</label>
@@ -101,7 +101,7 @@
                                                 <td><?php echo $cl->client_name ?></td>
                                                 <td><?php echo $cl->client_contact ?></td>
                                                 <td><?php echo date('d-m-Y', strtotime($cl->client_date_register)) ?></td>
-                                                <td><?php echo $cl->so_number ?></td>
+                                                <td><?php echo str_pad($cl->so_number, 3, '0', STR_PAD_LEFT) ?></td>
                                                 <td><?php echo $cl->invoice_number ?></td>
                                             </tr>
                                         <?php endforeach; ?>

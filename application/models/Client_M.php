@@ -5,6 +5,7 @@ class Client_M extends CI_Model
 {
     public function get_all_client()
     {
+        $this->db->select('tb_company.*, tb_client.client_id, tb_client.client_code, tb_client.client_name, tb_client.so_number as so_num, tb_client.invoice_number, tb_client.client_contact, tb_client.client_date_register, tb_client.company_id');
         $this->db->join('tb_company', 'tb_client.company_id = tb_company.company_id', 'left');
         return $this->db->get('tb_client')->result();
     }
