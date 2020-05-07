@@ -210,7 +210,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <a href="<?php echo base_url('salesorder') ?>" class="nav-link <?php if ($this->uri->segment(1) == 'salesorder') {
                                                                                                     echo 'active';
                                                                                                 } ?>">
-                                    <i class="nav-icon fas fa-box"></i>
+                                    <i class="nav-icon fas fa-coins"></i>
                                     <p>
                                         Sales Order
                                         <i class="right fas fa-angle-left"></i>

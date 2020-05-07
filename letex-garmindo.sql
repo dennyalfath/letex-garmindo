@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2020 at 12:24 PM
+-- Generation Time: May 07, 2020 at 06:00 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -38,7 +38,8 @@ CREATE TABLE `tb_category` (
 --
 
 INSERT INTO `tb_category` (`cat_id`, `cat_name`) VALUES
-(1, 'Pakaian');
+(1, 'Shoes'),
+(2, 'Jacket');
 
 -- --------------------------------------------------------
 
@@ -57,13 +58,6 @@ CREATE TABLE `tb_client` (
   `company_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tb_client`
---
-
-INSERT INTO `tb_client` (`client_id`, `client_code`, `client_name`, `so_number`, `invoice_number`, `client_contact`, `client_date_register`, `company_id`) VALUES
-(1, 'WM', 'Www', 34, 0, '12321321321', '2020-05-04', 3);
-
 -- --------------------------------------------------------
 
 --
@@ -73,22 +67,13 @@ INSERT INTO `tb_client` (`client_id`, `client_code`, `client_name`, `so_number`,
 CREATE TABLE `tb_company` (
   `company_id` int(11) NOT NULL,
   `company_name` varchar(255) NOT NULL,
-  `company_code` varchar(255) NOT NULL,
+  `company_code` char(3) NOT NULL,
   `company_contact` varchar(255) NOT NULL,
   `company_address` varchar(255) NOT NULL,
   `so_number` int(11) NOT NULL,
   `company_status` enum('Active','Inactive') NOT NULL,
   `company_logo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_company`
---
-
-INSERT INTO `tb_company` (`company_id`, `company_name`, `company_code`, `company_contact`, `company_address`, `so_number`, `company_status`, `company_logo`) VALUES
-(1, 'Universitas Internasional Batam', 'UIB', '07787437111', 'Jl. Gajah Mada', 1, 'Active', ''),
-(3, 'Tribina Jasa Indo', 'TBJ', '12312312', 'asdasdasdaa', 34, 'Active', 'UIB_Logo2.jpg'),
-(4, 'sadadas', 'as', '12312', 'ddafa', 325, 'Active', '');
 
 -- --------------------------------------------------------
 
@@ -145,13 +130,6 @@ CREATE TABLE `tb_product` (
   `pr_picture` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tb_product`
---
-
-INSERT INTO `tb_product` (`pr_id`, `client_id`, `cat_id`, `pr_name`, `style`, `sell_price`, `pr_description`, `pr_picture`) VALUES
-(1, 1, 1, 'Jaket', 'Apa nih', 20000, 'Mantap', 'c1cf6d575178d84528811aa80a5783fa.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -160,6 +138,7 @@ INSERT INTO `tb_product` (`pr_id`, `client_id`, `cat_id`, `pr_name`, `style`, `s
 
 CREATE TABLE `tb_sales_order` (
   `so_id` int(11) NOT NULL,
+  `so_number` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
   `so_description` varchar(255) DEFAULT NULL,
   `so_date_order` date NOT NULL DEFAULT current_timestamp(),
@@ -208,7 +187,8 @@ CREATE TABLE `tb_user` (
 INSERT INTO `tb_user` (`user_id`, `username`, `password`, `role`, `block`) VALUES
 (1, 'admin', '0192023a7bbd73250516f069df18b500', 'superadmin', 'N'),
 (2, 'denny', '34814f45c5b89ee4ea7e77662747a0e6', 'drafter', 'N'),
-(9, 'heri', 'af25458116a2464f9401870dff1e11f5', 'admin', 'N');
+(9, 'heri', 'af25458116a2464f9401870dff1e11f5', 'admin', 'N'),
+(10, 'manager', '0795151defba7a4b5dfa89170de46277', 'manager', 'N');
 
 --
 -- Indexes for dumped tables
@@ -282,19 +262,19 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT for table `tb_category`
 --
 ALTER TABLE `tb_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_client`
 --
 ALTER TABLE `tb_client`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_company`
 --
 ALTER TABLE `tb_company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_fabric`
@@ -318,7 +298,7 @@ ALTER TABLE `tb_invoice_detail`
 -- AUTO_INCREMENT for table `tb_product`
 --
 ALTER TABLE `tb_product`
-  MODIFY `pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `pr_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_sales_order`
@@ -336,7 +316,7 @@ ALTER TABLE `tb_sales_order_detail`
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

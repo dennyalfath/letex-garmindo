@@ -21,15 +21,27 @@
                     <?php foreach ($salesorder as $so) : ?>
                         <tr>
                             <td><?php echo $i++ ?></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><?php echo str_pad($so->so_number, 3, '0', STR_PAD_LEFT) ?></td>
+                            <td><?php echo $so->client_name ?></td>
+                            <td><?php echo $so->so_description ?></td>
+                            <td><?php echo date('d-m-Y', strtotime($so->so_date_order)) ?></td>
+                            <td><?php echo $so->so_total_amount ?></td>
+                            <td>
+                                <?php if ($so->so_status == 'cut') {
+                                    echo '<span class="badge badge-warning">On Cutting</span>';
+                                } else if ($so->so_status == 'sew') {
+                                    echo '<span class="badge badge-warning">On Sewing</span>';
+                                } else if ($so->so_status == 'pack') {
+                                    echo '<span class="badge badge-warning">On Packing</span>';
+                                } else if ($so->so_status == 'sent') {
+                                    echo '<span class="badge badge-success">Sent Out</span>';
+                                } else if ($so->so_status == 'cancelled') {
+                                    echo '<span class="badge badge-danger">Cancelled</span>';
+                                }
+                                ?>
+                            </td>
                             <td>
                                 <a href="<?php echo base_url('salesorder/edit/' . $so->so_id) ?>" class="btn btn-sm btn-warning">Modify</a>
-                                <a href="<?php echo base_url('salesorder/destroy/' . $so->so_id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -1,14 +1,15 @@
 <div class="content">
     <div class="container-fluid">
+        <?php echo $this->session->flashdata('message') ?>
         <form action="<?php echo base_url('salesorder/store') ?>" method="POST">
             <div class="form-group">
                 <label for="so_number">SO. Number</label>
-                <input type="text" class="form-control" name="so_number" id="so_number" placeholder="Automatically filled when client is selected" readonly>
+                <input type="text" class="form-control" name="so_number" id="so_number" placeholder="Automatically filled when client is selected" readonly required>
             </div>
             <div class="form-group">
                 <label for="client">Client</label>
-                <select name="client" class="form-control" id="client">
-                    <option value="0">-- Choose Client --</option>
+                <select name="client" class="form-control" id="client" required>
+                    <option value="0">-- Select one --</option>
                     <?php foreach ($client as $cl) : ?>
                         <option value="<?php echo $cl->client_id ?>"><?php echo $cl->client_name ?></option>
                     <?php endforeach; ?>
@@ -20,16 +21,17 @@
             </div>
             <div class="form-group">
                 <label for="total_amount">Total Amount</label>
-                <input type="text" class="form-control" name="total_amount">
+                <input type="text" class="form-control" name="total_amount" required>
             </div>
             <div class="form-group">
                 <label for="status">Status</label>
-                <select name="status" class="form-control">
-                    <option value="1">On Cutting</option>
-                    <option value="1">On Sewing</option>
-                    <option value="1">On Packing</option>
-                    <option value="1">Sent Out</option>
-                    <option value="1">Cancelled</option>
+                <select name="status" class="form-control" required>
+                    <option value="0">-- Select one --</option>
+                    <option value="cut">On Cutting</option>
+                    <option value="sew">On Sewing</option>
+                    <option value="pack">On Packing</option>
+                    <option value="sent">Sent Out</option>
+                    <option value="cancelled">Cancelled</option>
                 </select>
             </div>
             <div class="form-group">

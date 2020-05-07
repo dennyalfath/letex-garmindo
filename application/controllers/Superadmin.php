@@ -14,11 +14,18 @@ class Superadmin extends CI_Controller
 
         $this->load->library('form_validation');
         $this->load->model('users_m');
+        $this->load->model('salesorder_m');
     }
     public function index()
     {
         $data = array(
-            'title' => 'Super Admin'
+            'title' => 'Super Admin',
+            'total_orders' => $this->salesorder_m->count_all_so(),
+            'oncutting' => $this->salesorder_m->count_oncutting_so(),
+            'onsewing' => $this->salesorder_m->count_onsewing_so(),
+            'onpacking' => $this->salesorder_m->count_onpacking_so(),
+            'sent_out' => $this->salesorder_m->count_sent_out_so(),
+            'cancelled' => $this->salesorder_m->count_cancelled_so()
         );
 
         $this->load->view('templates/header', $data);
