@@ -62,7 +62,7 @@
             //AJAX REQUEST
             if (client) {
                 $.ajax({
-                    url: '<?php echo base_url('salesorder/getClient') ?>',
+                    url: '<?php echo base_url('salesorder/get_company_so') ?>',
                     method: 'post',
                     data: {
                         client: client
@@ -73,10 +73,56 @@
                         //Add SO Number
                         var soNum = parseInt(data['so_number']);
                         soNum = soNum + 1;
-                        $('#so_number').val(formatted_string('000', soNum, 'l'));
+                        $('#so_number').val(data['company_code'] + '-' + formatted_string('000', soNum, 'l'));
+                        $('#int_so_number').val(soNum);
+                        $('#company').val(data['company_id']);
                     }
                 });
             }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() { // Ketika halaman sudah diload dan siap    
+        $("#add-items").click(function() { // Ketika tombol Tambah Data Form di klik      
+            var total = parseInt($("#form-total").val()); // Ambil jumlah data form pada textbox jumlah-form      
+            var nextform = total + 1; // Tambah 1 untuk jumlah form nya            
+            // Kita akan menambahkan form dengan menggunakan append      
+            // pada sebuah tag div yg kita beri id insert-form      
+            $("#insert-form").append(
+                '<div class="card">' + '<div class="card-header">' + '<h5 class="card-title font-weight-bold">' + 'Item ' + nextform + '</h5>' + '</div>' +
+
+                '<div class="card-body">' +
+
+                '<div class="row">' +
+
+                '<div class="col-md-3">' + ' <div class="form-group">' + ' <label for="so_number">SO. Number</label>' + '<input type="text" class="form-control" name="sod_so_number[]" value="<?php echo $salesorder->so_number ?>" readonly required>' + '</div>' + '</div>' +
+
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="product">Product</label>' + '<select name="sod_product[]" class="form-control" required>' + '<option value="0">-- Select Product --</option>' + '<?php foreach ($product as $pr) : ?>' + ' <option value="<?php echo $pr->pr_id ?>"><?php echo $pr->pr_name ?></option>' + ' <?php endforeach; ?>' + '</select>' + ' </div>' + ' </div>' +
+
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="user">Responsible Staff</label>' + '<select name="sod_user[]" class="form-control" required>' + '<option value="0">-- Select Staf --</option>' + '<?php foreach ($users as $us) : ?>' + ' <option value="<?php echo $us->user_id ?>"><?php echo ucfirst($us->username) ?></option>' + ' <?php endforeach; ?>' + '</select>' + '</div>' + '</div>' +
+
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="qty">Quantity</label>' + '<input type="text" class="form-control" name="sod_qty[]" required>' + '</div>' + '</div>' +
+
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="remark_size">Remark Size</label>' + '<input type="text" class="form-control" name="sod_remark_size[]" required>' + '</div>' + '</div>' +
+
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="desc">Description</label>' + '<input type="text" class="form-control" name="sod_desc[]">' + '</div>' + '</div>' +
+
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="status">Status</label>' + '<select name="status[]" class="form-control" required>' + '<option value="0">-- Select status --</option>' + ' <option value="cut">On Cutting</option>' + '<option value="sew">On Sewing</option>' + '<option value="pack">On Packing</option>' + '<option value="sent">Sent Out</option>' + '<option value="cancelled">Cancelled</option>' + '</select>' + '</div>' + '</div>' +
+
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="sod_total_price">Total Price</label>' + '<input type="text" class="form-control" name="sod_total_price[]">' + '</div>' + '</div>' +
+
+                '</div>' +
+
+                '</div>' + '</div>'
+            );
+            $("#form-total").val(nextform); // Ubah value textbox jumlah-form dengan variabel nextform    
+        });
+        // Buat fungsi untuk mereset form ke semula    
+        $("#reset-items").click(function() {
+            $("#insert-form").html(""); // Kita kosongkan isi dari div insert-form     
+            $("#form-total").val("1"); // Ubah kembali value jumlah form menjadi 1   
         });
     });
 </script>

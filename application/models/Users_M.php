@@ -16,6 +16,12 @@ class Users_M extends CI_Model
         return $this->db->get('tb_user')->result();
     }
 
+    public function get_all_users_name_only()
+    {
+        $this->db->select('user_id, username');
+        return $this->db->get('tb_user')->result();
+    }
+
     public function get_user_by_id($id)
     {
         $this->db->where('user_id', $id);

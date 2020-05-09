@@ -78,6 +78,12 @@ class Company_M extends CI_Model
         return json_decode($response);
     }
 
+    public function update_company_data($company_id, $data)
+    {
+        $this->db->where('company_id', $company_id);
+        return $this->db->update('tb_company', $data);
+    }
+
     public function delete_company($id)
     {
         $curl = curl_init();

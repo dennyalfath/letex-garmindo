@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2020 at 06:00 AM
+-- Generation Time: May 09, 2020 at 08:53 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -33,14 +33,6 @@ CREATE TABLE `tb_category` (
   `cat_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tb_category`
---
-
-INSERT INTO `tb_category` (`cat_id`, `cat_name`) VALUES
-(1, 'Shoes'),
-(2, 'Jacket');
-
 -- --------------------------------------------------------
 
 --
@@ -49,11 +41,8 @@ INSERT INTO `tb_category` (`cat_id`, `cat_name`) VALUES
 
 CREATE TABLE `tb_client` (
   `client_id` int(11) NOT NULL,
-  `client_code` varchar(11) NOT NULL,
-  `client_name` varchar(255) NOT NULL,
-  `so_number` int(11) NOT NULL,
-  `invoice_number` int(11) NOT NULL,
-  `client_contact` varchar(255) NOT NULL,
+  `client_name` varchar(125) NOT NULL,
+  `client_contact` varchar(15) NOT NULL,
   `client_date_register` date NOT NULL DEFAULT current_timestamp(),
   `company_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -72,7 +61,8 @@ CREATE TABLE `tb_company` (
   `company_address` varchar(255) NOT NULL,
   `so_number` int(11) NOT NULL,
   `company_status` enum('Active','Inactive') NOT NULL,
-  `company_logo` varchar(255) DEFAULT NULL
+  `company_logo` varchar(255) DEFAULT NULL,
+  `invoice_number` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -138,12 +128,12 @@ CREATE TABLE `tb_product` (
 
 CREATE TABLE `tb_sales_order` (
   `so_id` int(11) NOT NULL,
-  `so_number` int(11) NOT NULL,
+  `so_number` varchar(11) NOT NULL,
   `client_id` int(11) NOT NULL,
   `so_description` varchar(255) DEFAULT NULL,
   `so_date_order` date NOT NULL DEFAULT current_timestamp(),
-  `so_total_amount` int(11) NOT NULL,
-  `so_status` varchar(50) NOT NULL
+  `so_total_amount` int(11) DEFAULT NULL,
+  `so_status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -155,7 +145,7 @@ CREATE TABLE `tb_sales_order` (
 CREATE TABLE `tb_sales_order_detail` (
   `sod_id` int(11) NOT NULL,
   `pr_id` int(11) NOT NULL,
-  `so_number` int(11) NOT NULL,
+  `so_number` varchar(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `total_qty` int(11) NOT NULL,
   `total_price` int(11) NOT NULL,
@@ -163,7 +153,7 @@ CREATE TABLE `tb_sales_order_detail` (
   `sod_description` varchar(255) DEFAULT NULL,
   `sod_status` varchar(50) NOT NULL,
   `last_updated` date NOT NULL DEFAULT current_timestamp(),
-  `invoice_qty` int(11) NOT NULL
+  `invoice_qty` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -262,7 +252,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT for table `tb_category`
 --
 ALTER TABLE `tb_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_client`

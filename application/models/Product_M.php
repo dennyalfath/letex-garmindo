@@ -18,6 +18,12 @@ class Product_M extends CI_Model
         return $this->db->get('tb_product')->row();
     }
 
+    public function get_products_by_clid($id)
+    {
+        $this->db->where('client_id', $id);
+        return $this->db->get('tb_product')->result();
+    }
+
     public function insert_product($data)
     {
         return $this->db->insert('tb_product', $data);

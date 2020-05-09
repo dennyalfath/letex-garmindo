@@ -72,7 +72,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="cpso_number">SO Number:</label>
-                                <input type="number" class="form-control" value="<?php echo str_pad($cp->so_number, 3, '0', STR_PAD_LEFT) ?>" readonly>
+                                <input type="text" class="form-control" value="<?php echo $cp->company_code . '-' . str_pad($cp->so_number, 3, '0', STR_PAD_LEFT) ?>" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="cpstatus">Company Status:</label>
@@ -84,12 +84,9 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Client Code</th>
                                             <th>Client Name</th>
                                             <th>Contact</th>
                                             <th>Date of Registered</th>
-                                            <th>SO No.</th>
-                                            <th>Invoice No.</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -97,12 +94,9 @@
                                         <?php foreach ($client[$cp->company_id] as $cl) : ?>
                                             <tr>
                                                 <td><?php echo $i++ ?></td>
-                                                <td><?php echo $cl->client_code ?></td>
                                                 <td><?php echo $cl->client_name ?></td>
                                                 <td><?php echo $cl->client_contact ?></td>
                                                 <td><?php echo date('d-m-Y', strtotime($cl->client_date_register)) ?></td>
-                                                <td><?php echo str_pad($cl->so_number, 3, '0', STR_PAD_LEFT) ?></td>
-                                                <td><?php echo $cl->invoice_number ?></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

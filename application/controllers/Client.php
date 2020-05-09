@@ -44,7 +44,6 @@ class Client extends CI_Controller
     {
         $this->form_validation->set_rules('client_name', 'Client Name', 'required');
         $this->form_validation->set_rules('client_contact', 'Client Contact', 'required');
-        $this->form_validation->set_rules('client_code', 'Client Code', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Empty value is not allowed!</div>');
@@ -52,11 +51,8 @@ class Client extends CI_Controller
         } else {
             $data = array(
                 'client_name' => $this->input->post('client_name'),
-                'client_code' => $this->input->post('client_code'),
                 'client_contact' => $this->input->post('client_contact'),
                 'company_id' => $this->input->post('company'),
-                'so_number' => $this->input->post('client_sonum'),
-                'invoice_number' => $this->input->post('client_invnum'),
                 'client_date_register' => date('Y-m-d')
             );
 
@@ -86,7 +82,6 @@ class Client extends CI_Controller
     {
         $this->form_validation->set_rules('client_name', 'Client Name', 'required');
         $this->form_validation->set_rules('client_contact', 'Client Contact', 'required');
-        $this->form_validation->set_rules('client_code', 'Client Code', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Empty values is not allowed!</div>');
@@ -94,11 +89,8 @@ class Client extends CI_Controller
         } else {
             $data = array(
                 'client_name' => $this->input->post('client_name'),
-                'client_code' => $this->input->post('client_code'),
                 'client_contact' => $this->input->post('client_contact'),
                 'company_id' => $this->input->post('company'),
-                'so_number' => $this->input->post('client_sonum'),
-                'invoice_number' => $this->input->post('client_invnum'),
             );
 
             if ($this->client_m->update_client($id, $data)) {

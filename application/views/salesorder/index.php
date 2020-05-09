@@ -25,22 +25,24 @@
                             <td><?php echo $so->client_name ?></td>
                             <td><?php echo $so->so_description ?></td>
                             <td><?php echo date('d-m-Y', strtotime($so->so_date_order)) ?></td>
-                            <td><?php echo $so->so_total_amount ?></td>
                             <td>
-                                <?php if ($so->so_status == 'cut') {
-                                    echo '<span class="badge badge-warning">On Cutting</span>';
+                                <?php if (empty($so->total_amount)) {
+                                    echo '-';
+                                } else {
+                                    echo $so->so_total_amount;
+                                } ?>
+                            </td>
+                            <td>
+                                <?php if ($so->so_status == 'progress') {
+                                    echo '<span class="badge badge-warning">On Progress</span>';
                                 } else if ($so->so_status == 'sew') {
-                                    echo '<span class="badge badge-warning">On Sewing</span>';
-                                } else if ($so->so_status == 'pack') {
-                                    echo '<span class="badge badge-warning">On Packing</span>';
-                                } else if ($so->so_status == 'sent') {
-                                    echo '<span class="badge badge-success">Sent Out</span>';
-                                } else if ($so->so_status == 'cancelled') {
-                                    echo '<span class="badge badge-danger">Cancelled</span>';
+                                    echo '<span class="badge badge-success">Finished</span>';
                                 }
                                 ?>
                             </td>
                             <td>
+                                <a href="<?php echo base_url('salesorder/show_detail/' . $so->so_id) ?>" class="btn btn-sm btn-primary">Detail</a>
+                                <a href="<?php echo base_url('salesorder/add_detail/' . $so->so_id) ?>" class="btn btn-sm btn-success">Add Items</a>
                                 <a href="<?php echo base_url('salesorder/edit/' . $so->so_id) ?>" class="btn btn-sm btn-warning">Modify</a>
                             </td>
                         </tr>

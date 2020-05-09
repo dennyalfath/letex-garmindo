@@ -8,28 +8,17 @@
                 <input type="text" class="form-control" name="client_name" required>
             </div>
             <div class="form-group">
-                <label for="client_code">Client Code:</label>
-                <input type="text" class="form-control" name="client_code" required>
-            </div>
-            <div class="form-group">
                 <label for="client_contact">Client Contact:</label>
                 <input type="text" class="form-control" name="client_contact" required>
             </div>
             <div class="form-group">
                 <label for="company">Company:</label>
                 <select name="company" class="form-control" required>
+                    <option value="0">-- Select Company --</option>
                     <?php foreach ($company as $cp) : ?>
                         <option value="<?php echo $cp->company_id ?>"><?php echo $cp->company_name ?></option>
                     <?php endforeach; ?>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="client_sonum">Client SO Number:</label>
-                <input type="text" class="form-control" name="client_sonum">
-            </div>
-            <div class="form-group">
-                <label for="client_invnum">Client Invoice Number:</label>
-                <input type="text" class="form-control" name="client_invnum">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Save</button>
