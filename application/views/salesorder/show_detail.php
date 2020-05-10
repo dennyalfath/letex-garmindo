@@ -9,6 +9,7 @@
                         <th>#</th>
                         <th>SO. Number</th>
                         <th>Product</th>
+                        <th>Qty</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -20,6 +21,7 @@
                             <td><?php echo $i++ ?></td>
                             <td><?php echo $sod->so_number ?></td>
                             <td><?php echo $sod->pr_name ?></td>
+                            <td><?php echo $sod->total_qty ?></td>
                             <td>
                                 <?php if ($sod->sod_status == 'cut') {
                                     echo '<span class="badge badge-warning">On Cutting</span>';
@@ -34,7 +36,22 @@
                                 }
                                 ?>
                             </td>
-                            <td><a href="#more-sod<?php echo $sod->sod_id ?>" class="btn btn-sm btn-primary" data-toggle="modal">More Detail</a></td>
+                            <td>
+                                <a href="#more-sod<?php echo $sod->sod_id ?>" class="btn btn-sm btn-primary" data-toggle="modal">More Detail</a>
+                                <?php if ($sod->sod_status == 'cut') {
+                                    echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=sew&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Sewing</a>";
+                                } else if ($sod->sod_status == 'sew') {
+                                    echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=pack&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Packing</a>";
+                                } else if ($sod->sod_status == 'pack') {
+                                    echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=sent&so_id=' . $so_id) . " class='btn btn-sm btn-success'>Sent Out</a>";
+                                } else if ($sod->sod_status == 'cancelled') {
+                                    echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=cut&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Cutting</a>";
+                                }
+                                if ($sod->sod_status != 'cancelled') {
+                                    echo " <a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=cancelled&so_id=' . $so_id) . " class='btn btn-sm btn-danger'>Cancel</a>";
+                                }
+                                ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -53,10 +70,6 @@
                             </button>
                         </div>
                         <div class="modal-body" style="overflow-x: auto">
-                            <div class="form-group">
-                                <label for="qty">Quantity:</label>
-                                <input type="text" class="form-control" value="<?php echo $sod->total_qty ?>" readonly>
-                            </div>
                             <div class="form-group">
                                 <label for="remark_size">Remark Size:</label>
                                 <input type="text" class="form-control" value="<?php echo $sod->remark_size ?>" readonly>

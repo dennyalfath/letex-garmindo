@@ -91,9 +91,38 @@ class SalesOrder_M extends CI_Model
         return $this->db->insert_batch('tb_sales_order_detail', $data);
     }
 
+    public function update_sales_order_status($id) 
+    {
+        $so = $this->get_so_num_by_id($id);
+        $details = $this->get_all_so_details($so->so_number);
+        
+        $status_list = array('cancelled', 'sent', 'pack', 'sew', 'cut');
+        $index = 0;
+        $status = '';
+
+        foreach ($details as $detail) {
+            $detail_index = array_search($detail->sod_status, array_values($status_list));
+            if ($detail_index >= $index) {
+                $status = $detail->sod_status;
+                $index = $detail_index;
+            }
+        }
+        $data = array(
+            'so_status' => $status
+        );
+        $this->db->where('so_id', $id);
+        $this->db->update('tb_sales_order', $data);
+    }
+
     public function update_sales_order($id, $data)
     {
         $this->db->where('so_id', $id);
         return $this->db->update('tb_sales_order', $data);
+    }
+
+    public function update_sales_order_detail($id, $data)
+    {
+        $this->db->where('sod_id', $id);
+        return $this->db->update('tb_sales_order_detail', $data);
     }
 }

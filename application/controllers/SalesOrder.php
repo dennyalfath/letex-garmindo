@@ -66,8 +66,7 @@ class SalesOrder extends CI_Controller
                 'so_number' => $this->input->post('so_number'),
                 'client_id' => $client_id,
                 'so_description' => $this->input->post('description'),
-                'so_date_order' => date('Y-m-d'),
-                'so_status' => $this->input->post('status')
+                'so_date_order' => date('Y-m-d')
             );
 
             //Get Selected Company
@@ -153,8 +152,7 @@ class SalesOrder extends CI_Controller
         $data = array(
             'title' => 'Add Sales Order Detail',
             'product' => $this->product_m->get_products_by_clid($salesorder->client_id),
-            'users' => $this->users_m->get_all_users_name_only(),
-            'salesorder' => $this->salesorder_m->get_so_num_by_id($so_id)
+            'salesorder' => $this->salesorder_m->get_so_num_by_id($so_id),
         );
 
         $this->load->view('templates/header', $data);
@@ -166,7 +164,7 @@ class SalesOrder extends CI_Controller
     {
         $sod_so_number = $this->input->post('sod_so_number');
         $sod_product = $this->input->post('sod_product');
-        $sod_user = $this->input->post('sod_user');
+        $sod_user = $this->session->userdata('user_id');
         $sod_qty = $this->input->post('sod_qty');
         $sod_remark_size = $this->input->post('sod_remark_size');
         $sod_desc = $this->input->post('sod_desc');
@@ -175,12 +173,13 @@ class SalesOrder extends CI_Controller
 
         $data = array();
         $i = 0;
+        $so_id = $this->input->post('so_id');
 
         foreach ($sod_so_number as $so_num) {
             array_push($data, array(
                 'so_number' => $so_num,
                 'pr_id' => $sod_product[$i],
-                'user_id' => $sod_user[$i],
+                'user_id' => $sod_user,
                 'total_qty' => $sod_qty[$i],
                 'total_price' => $sod_total_price[$i],
                 'remark_size' => $sod_remark_size[$i],
@@ -192,11 +191,29 @@ class SalesOrder extends CI_Controller
         }
 
         if ($this->salesorder_m->insert_sales_order_detail($data)) {
+            $this->salesorder_m->update_sales_order_status($so_id);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data saved.</div>');
             redirect(base_url('salesorder'));
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to save data.</div>');
             redirect(base_url('salesorder'));
+        }
+    }
+
+    public function update_detail_status($id)
+    {
+        $data = array(
+            'sod_status' => $this->input->get('status')
+        );
+        $so_id = $this->input->get('so_id');
+
+        if ($this->salesorder_m->update_sales_order_detail($id, $data)) {
+            $this->salesorder_m->update_sales_order_status($so_id);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Status updated.</div>');
+            redirect(base_url('/salesorder/show_detail/' . $so_id));
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to update status.</div>');
+            redirect(base_url('/salesorder/show_detail/' . $so_id));
         }
     }
 }

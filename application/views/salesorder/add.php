@@ -22,14 +22,6 @@
                 <input type="text" class="form-control" name="description">
             </div>
             <div class="form-group">
-                <label for="status">Status</label>
-                <select name="status" class="form-control" required>
-                    <option value="0">-- Select status --</option>
-                    <option value="progress">On Progress</option>
-                    <option value="finished">Finished</option>
-                </select>
-            </div>
-            <div class="form-group">
                 <button type="submit" class="btn btn-primary form-control">Proceed</button>
             </div>
         </form>

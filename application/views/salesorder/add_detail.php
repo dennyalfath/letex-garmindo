@@ -7,6 +7,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <input type="hidden" class="form-control" name="so_id" value="<?php echo $salesorder->so_id ?>" readonly required>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="so_number">SO. Number</label>
@@ -21,17 +22,6 @@
                                     <option value="0">-- Select Product --</option>
                                     <?php foreach ($product as $pr) : ?>
                                         <option value="<?php echo $pr->pr_id ?>"><?php echo $pr->pr_name ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="user">Responsible Staff</label>
-                                <select name="sod_user[]" class="form-control" required>
-                                    <option value="0">-- Select Staf --</option>
-                                    <?php foreach ($users as $us) : ?>
-                                        <option value="<?php echo $us->user_id ?>"><?php echo ucfirst($us->username) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

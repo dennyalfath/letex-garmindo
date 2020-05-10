@@ -33,10 +33,16 @@
                                 } ?>
                             </td>
                             <td>
-                                <?php if ($so->so_status == 'progress') {
-                                    echo '<span class="badge badge-warning">On Progress</span>';
+                                <?php if ($so->so_status == 'cut') {
+                                    echo '<span class="badge badge-warning">On Cutting</span>';
                                 } else if ($so->so_status == 'sew') {
-                                    echo '<span class="badge badge-success">Finished</span>';
+                                    echo '<span class="badge badge-warning">On Sewing</span>';
+                                } else if ($so->so_status == 'pack') {
+                                    echo '<span class="badge badge-warning">On Packing</span>';
+                                } else if ($so->so_status == 'sent') {
+                                    echo '<span class="badge badge-success">Sent Out</span>';
+                                } else if ($so->so_status == 'cancelled') {
+                                    echo '<span class="badge badge-danger">Cancelled</span>';
                                 }
                                 ?>
                             </td>
