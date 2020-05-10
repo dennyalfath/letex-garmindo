@@ -40,18 +40,34 @@
                             </td>
                             <td>
                                 <a href="#more-sod<?php echo $sod->sod_id ?>" class="btn btn-sm btn-primary" data-toggle="modal">More Detail</a>
-                                <?php if ($sod->sod_status == 'cut') {
-                                    echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=sew&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Sewing</a>";
-                                } else if ($sod->sod_status == 'sew') {
-                                    echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=pack&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Packing</a>";
-                                } else if ($sod->sod_status == 'pack') {
-                                    echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=sent&so_id=' . $so_id) . " class='btn btn-sm btn-success'>Sent Out</a>";
-                                } else if ($sod->sod_status == 'cancelled') {
-                                    echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=cut&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Cutting</a>";
-                                }
-                                if ($sod->sod_status != 'cancelled') {
-                                    echo " <a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=cancelled&so_id=' . $so_id) . " class='btn btn-sm btn-danger'>Cancel</a>";
-                                }
+                                <?php 
+                                    if ($sod->sod_status == 'cut' && ($role == 'drafter' || $role == 'admin' || $role == 'manager' || $role == 'superadmin')) {
+                                        echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=sew&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Sewing</a>";
+                                    } else if ($sod->sod_status == 'sew' && ($role == 'tailor' || $role == 'admin' || $role == 'manager' || $role == 'superadmin')) {
+                                        echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=pack&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Packing</a>";
+                                    } else if ($sod->sod_status == 'pack' && ($role == 'packing' || $role == 'admin' || $role == 'manager' || $role == 'superadmin')) {
+                                        echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=sent&so_id=' . $so_id) . " class='btn btn-sm btn-success'>Sent Out</a>";
+                                    } else if ($sod->sod_status == 'cancelled') {
+                                        if ($role == 'drafter') {
+                                            echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=sew&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Sewing</a>";
+                                        } else if ($role == 'tailor') {
+                                            echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=pack&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Packing</a>";
+                                        } else if ($role == 'packing') {
+                                            echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=sent&so_id=' . $so_id) . " class='btn btn-sm btn-success'>Sent Out</a>";
+                                        }
+                                        else {
+                                            echo "<a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=cut&so_id=' . $so_id) . " class='btn btn-sm btn-success'>On Cutting</a>";
+                                        }
+                                    }
+                                    if ($sod->sod_status != 'cancelled') {
+                                        if ($sod->sod_status == 'cut' && ($role == 'drafter' || $role == 'admin' || $role == 'manager' || $role == 'superadmin')) {
+                                            echo " <a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=cancelled&so_id=' . $so_id) . " class='btn btn-sm btn-danger'>Cancel</a>";
+                                        } else if ($sod->sod_status == 'sew' && ($role == 'tailor' || $role == 'admin' || $role == 'manager' || $role == 'superadmin')) {
+                                            echo " <a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=cancelled&so_id=' . $so_id) . " class='btn btn-sm btn-danger'>Cancel</a>";
+                                        } else if (($sod->sod_status == 'pack' || $sod->sod_status == 'sent') && ($role == 'packing' || $role == 'admin' || $role == 'manager' || $role == 'superadmin')) {
+                                            echo " <a href=" . base_url('salesorder/update_detail_status/' . $sod->sod_id . '?status=cancelled&so_id=' . $so_id) . " class='btn btn-sm btn-danger'>Cancel</a>";
+                                        }
+                                    }
                                 ?>
                             </td>
                         </tr>

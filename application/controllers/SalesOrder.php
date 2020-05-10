@@ -9,6 +9,7 @@ class SalesOrder extends CI_Controller
         if ($this->session->userdata('username') != '' && $this->session->userdata('role') == 'superadmin') {
         } else if ($this->session->userdata('username') != '' && $this->session->userdata('role') == 'manager') {
         } else if ($this->session->userdata('username') != '' && $this->session->userdata('role') == 'admin') {
+        } else if ($this->session->userdata('username') != '' && ($this->session->userdata('role') == 'drafter' || $this->session->userdata('role') == 'tailor' || $this->session->userdata('role') == 'packing')) {
         } else {
             show_404();
         }
@@ -134,7 +135,8 @@ class SalesOrder extends CI_Controller
         $data = array(
             'title' => 'Sales Order Detail',
             'so_id' => $so->so_id,
-            'so_detail' => $this->salesorder_m->get_all_so_details($so->so_number)
+            'so_detail' => $this->salesorder_m->get_all_so_details($so->so_number),
+            'role' => $this->session->userdata('role')
         );
 
         $this->load->view('templates/header', $data);
@@ -199,7 +201,9 @@ class SalesOrder extends CI_Controller
 
     public function update_detail_status($id)
     {
+        $sod_user = $this->session->userdata('user_id');
         $data = array(
+            'user_id' => $sod_user,
             'sod_status' => $this->input->get('status')
         );
         $so_id = $this->input->get('so_id');

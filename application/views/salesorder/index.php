@@ -42,8 +42,10 @@
                             </td>
                             <td>
                                 <a href="<?php echo base_url('salesorder/show_detail/' . $so->so_id) ?>" class="btn btn-sm btn-primary">Detail</a>
-                                <a href="<?php echo base_url('salesorder/add_detail/' . $so->so_id) ?>" class="btn btn-sm btn-success">Add Items</a>
-                                <a href="<?php echo base_url('salesorder/edit/' . $so->so_id) ?>" class="btn btn-sm btn-warning">Modify</a>
+                                <?php if ($this->session->userdata('role') == 'admin' || $this->session->userdata('role') == 'manager' || $this->session->userdata('role') == 'superadmin') : ?>
+                                    <a href="<?php echo base_url('salesorder/add_detail/' . $so->so_id) ?>" class="btn btn-sm btn-success">Add Items</a>
+                                    <a href="<?php echo base_url('salesorder/edit/' . $so->so_id) ?>" class="btn btn-sm btn-warning">Modify</a>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

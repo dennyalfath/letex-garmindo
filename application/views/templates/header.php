@@ -232,6 +232,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </ul>
                             </li>
                         <?php endif; ?>
+
+                        <?php if ($this->session->userdata('role') == 'drafter' || $this->session->userdata('role') == 'tailor' || $this->session->userdata('role') == 'packing') : ?>
+                            <li class="nav-item has-treeview">
+                                <a href="<?php echo base_url('salesorder') ?>" class="nav-link <?php if ($this->uri->segment(1) == 'salesorder') {
+                                                                                                    echo 'active';
+                                                                                                } ?>">
+                                    <i class="nav-icon fas fa-coins"></i>
+                                    <p>
+                                        Sales Order
+                                    </p>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <?php if ($this->session->userdata('role') == 'superadmin') : ?>
                             <li class="nav-item">
                                 <a href="<?php echo base_url('superadmin/usermanage') ?>" class="nav-link <?php if ($this->uri->segment(1) == 'superadmin' && $this->uri->segment(2) == 'usermanage') {

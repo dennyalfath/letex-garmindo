@@ -14,11 +14,15 @@ class Drafter extends CI_Controller
 
         $this->load->library('form_validation');
         $this->load->model('users_m');
+        $this->load->model('salesorder_m');
     }
     public function index()
     {
         $data = array(
-            'title' => 'Drafter'
+            'title' => 'Drafter',
+            'total_orders' => $this->salesorder_m->count_all_so(),
+            'oncutting' => $this->salesorder_m->count_oncutting_so(),
+            'cancelled' => $this->salesorder_m->count_cancelled_so()
         );
         $this->load->view('templates/header', $data);
         $this->load->view('drafter/index');
