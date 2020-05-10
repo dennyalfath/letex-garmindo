@@ -55,7 +55,6 @@ class SalesOrder extends CI_Controller
     {
         $this->form_validation->set_rules('so_number', 'SO Number', 'required');
         $this->form_validation->set_rules('client', 'Client', 'required');
-        $this->form_validation->set_rules('status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . validation_errors() . '</div>');
@@ -107,7 +106,6 @@ class SalesOrder extends CI_Controller
 
     public function update($id)
     {
-        $this->form_validation->set_rules('total_amount', 'Total Amount', 'required');
         $this->form_validation->set_rules('status', 'Status', 'required');
 
         if ($this->form_validation->run() == FALSE) {
@@ -117,7 +115,6 @@ class SalesOrder extends CI_Controller
             $client_id = $this->input->post('client');
             $data = array(
                 'so_description' => $this->input->post('description'),
-                'so_total_amount' => $this->input->post('total_amount'),
                 'so_status' => $this->input->post('status')
             );
 
@@ -169,7 +166,7 @@ class SalesOrder extends CI_Controller
         $sod_remark_size = $this->input->post('sod_remark_size');
         $sod_desc = $this->input->post('sod_desc');
         $sod_status = $this->input->post('sod_status');
-        $sod_total_price = $this->input->post('sod_total_price');
+        $sod_price = $this->input->post('sod_price');
 
         $data = array();
         $i = 0;
@@ -180,8 +177,8 @@ class SalesOrder extends CI_Controller
                 'so_number' => $so_num,
                 'pr_id' => $sod_product[$i],
                 'user_id' => $sod_user,
-                'total_qty' => $sod_qty[$i],
-                'total_price' => $sod_total_price[$i],
+                'qty' => $sod_qty[$i],
+                'price' => $sod_price[$i],
                 'remark_size' => $sod_remark_size[$i],
                 'sod_description' => $sod_desc[$i],
                 'sod_status' => $sod_status[$i]

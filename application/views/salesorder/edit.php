@@ -15,10 +15,6 @@
                 <input type="text" class="form-control" name="description" value="<?php echo $salesorder->so_description ?>">
             </div>
             <div class="form-group">
-                <label for="total_amount">Total Amount</label>
-                <input type="text" class="form-control" name="total_amount" value="<?php echo $salesorder->so_total_amount ?>" required>
-            </div>
-            <div class=" form-group">
                 <label for="status">Status</label>
                 <select name="status" class="form-control" required>
                     <option value="0">-- Select one --</option>

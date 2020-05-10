@@ -99,6 +99,7 @@ class SalesOrder_M extends CI_Model
         $status_list = array('cancelled', 'sent', 'pack', 'sew', 'cut');
         $index = 0;
         $status = '';
+        $total = '';
 
         foreach ($details as $detail) {
             $detail_index = array_search($detail->sod_status, array_values($status_list));
@@ -106,9 +107,13 @@ class SalesOrder_M extends CI_Model
                 $status = $detail->sod_status;
                 $index = $detail_index;
             }
+            if ($detail->sod_status != 'cancelled') {
+                $total += $detail->price * $detail->qty;                
+            }
         }
         $data = array(
-            'so_status' => $status
+            'so_status' => $status,
+            'so_total_amount' => $total
         );
         $this->db->where('so_id', $id);
         $this->db->update('tb_sales_order', $data);

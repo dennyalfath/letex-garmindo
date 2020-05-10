@@ -25,13 +25,7 @@
                             <td><?php echo $so->client_name ?></td>
                             <td><?php echo $so->so_description ?></td>
                             <td><?php echo date('d-m-Y', strtotime($so->so_date_order)) ?></td>
-                            <td>
-                                <?php if (empty($so->total_amount)) {
-                                    echo '-';
-                                } else {
-                                    echo $so->so_total_amount;
-                                } ?>
-                            </td>
+                            <td><?php echo number_format($so->so_total_amount) ?></td>
                             <td>
                                 <?php if ($so->so_status == 'cut') {
                                     echo '<span class="badge badge-warning">On Cutting</span>';

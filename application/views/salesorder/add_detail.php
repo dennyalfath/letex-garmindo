@@ -34,6 +34,12 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
+                                <label for="sod_price">Price</label>
+                                <input type="text" class="form-control" name="sod_price[]">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
                                 <label for="remark_size">Remark Size</label>
                                 <input type="text" class="form-control" name="sod_remark_size[]" required>
                             </div>
@@ -55,12 +61,6 @@
                                     <option value="sent">Sent Out</option>
                                     <option value="cancelled">Cancelled</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="sod_total_price">Total Price</label>
-                                <input type="text" class="form-control" name="sod_total_price[]">
                             </div>
                         </div>
                     </div>

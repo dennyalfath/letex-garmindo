@@ -10,6 +10,7 @@
                         <th>SO. Number</th>
                         <th>Product</th>
                         <th>Qty</th>
+                        <th>Price</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -21,7 +22,8 @@
                             <td><?php echo $i++ ?></td>
                             <td><?php echo $sod->so_number ?></td>
                             <td><?php echo $sod->pr_name ?></td>
-                            <td><?php echo $sod->total_qty ?></td>
+                            <td><?php echo $sod->qty ?></td>
+                            <td><?php echo number_format($sod->price) ?></td>
                             <td>
                                 <?php if ($sod->sod_status == 'cut') {
                                     echo '<span class="badge badge-warning">On Cutting</span>';
@@ -73,10 +75,6 @@
                             <div class="form-group">
                                 <label for="remark_size">Remark Size:</label>
                                 <input type="text" class="form-control" value="<?php echo $sod->remark_size ?>" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="total_price">Total Price:</label>
-                                <input type="text" class="form-control" value="<?php echo $sod->total_price ?>" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="desc">Description:</label>

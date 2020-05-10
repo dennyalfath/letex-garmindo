@@ -101,17 +101,15 @@
 
                 '<div class="col-md-3">' + '<div class="form-group">' + '<label for="product">Product</label>' + '<select name="sod_product[]" class="form-control" required>' + '<option value="0">-- Select Product --</option>' + '<?php foreach ($product as $pr) : ?>' + ' <option value="<?php echo $pr->pr_id ?>"><?php echo $pr->pr_name ?></option>' + ' <?php endforeach; ?>' + '</select>' + ' </div>' + ' </div>' +
 
-                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="user">Responsible Staff</label>' + '<select name="sod_user[]" class="form-control" required>' + '<option value="0">-- Select Staf --</option>' + '<?php foreach ($users as $us) : ?>' + ' <option value="<?php echo $us->user_id ?>"><?php echo ucfirst($us->username) ?></option>' + ' <?php endforeach; ?>' + '</select>' + '</div>' + '</div>' +
-
                 '<div class="col-md-3">' + '<div class="form-group">' + '<label for="qty">Quantity</label>' + '<input type="text" class="form-control" name="sod_qty[]" required>' + '</div>' + '</div>' +
+
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="sod_price">Price</label>' + '<input type="number" class="form-control" name="sod_price[]">' + '</div>' + '</div>' +
 
                 '<div class="col-md-3">' + '<div class="form-group">' + '<label for="remark_size">Remark Size</label>' + '<input type="text" class="form-control" name="sod_remark_size[]" required>' + '</div>' + '</div>' +
 
                 '<div class="col-md-3">' + '<div class="form-group">' + '<label for="desc">Description</label>' + '<input type="text" class="form-control" name="sod_desc[]">' + '</div>' + '</div>' +
 
                 '<div class="col-md-3">' + '<div class="form-group">' + '<label for="status">Status</label>' + '<select name="sod_status[]" class="form-control" required>' + '<option value="0">-- Select status --</option>' + ' <option value="cut">On Cutting</option>' + '<option value="sew">On Sewing</option>' + '<option value="pack">On Packing</option>' + '<option value="sent">Sent Out</option>' + '<option value="cancelled">Cancelled</option>' + '</select>' + '</div>' + '</div>' +
-
-                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="sod_total_price">Total Price</label>' + '<input type="text" class="form-control" name="sod_total_price[]">' + '</div>' + '</div>' +
 
                 '</div>' +
 
