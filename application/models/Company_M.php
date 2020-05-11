@@ -78,10 +78,21 @@ class Company_M extends CI_Model
         return json_decode($response);
     }
 
-    public function update_company_data($company_id, $data)
+    public function update_company_data($data)
     {
-        $this->db->where('company_id', $company_id);
-        return $this->db->update('tb_company', $data);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/company/update_so_number.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function delete_company($id)

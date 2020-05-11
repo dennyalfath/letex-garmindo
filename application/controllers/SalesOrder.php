@@ -75,12 +75,13 @@ class SalesOrder extends CI_Controller
             //Set new value for Company SO Number
             $so_number = intval($this->input->post('int_so_number'));
             $data_company = array(
+                'company_id' => $company_id,
                 'so_number' => $so_number
             );
 
             if ($this->salesorder_m->insert_sales_order($data)) {
                 //Update client SO Number
-                $this->company_m->update_company_data($company_id, $data_company);
+                $this->company_m->update_company_data($data_company);
 
                 //Message and Redirect
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data saved.</div>');
