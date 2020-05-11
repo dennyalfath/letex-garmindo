@@ -56,11 +56,12 @@ class Client extends CI_Controller
                 'client_date_register' => date('Y-m-d')
             );
 
-            if ($this->client_m->insert_client($data)) {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data saved!</div>');
+            $response = $this->client_m->insert_client($data);
+            if (!$response->error) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
                 redirect(base_url('client'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to save data!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
                 redirect(base_url('client/add'));
             }
         }
@@ -88,16 +89,18 @@ class Client extends CI_Controller
             redirect(base_url('client/edit/' . $id));
         } else {
             $data = array(
+                'client_id' => $id,
                 'client_name' => $this->input->post('client_name'),
                 'client_contact' => $this->input->post('client_contact'),
-                'company_id' => $this->input->post('company'),
+                'company_id' => $this->input->post('company')
             );
 
-            if ($this->client_m->update_client($id, $data)) {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data updated!</div>');
+            $response = $this->client_m->update_client($data);
+            if (!$response->error) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
                 redirect(base_url('client'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to update data!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
                 redirect(base_url('client/edit/' . $id));
             }
         }
@@ -105,11 +108,12 @@ class Client extends CI_Controller
 
     public function destroy($id)
     {
-        if ($this->client_m->delete_client($id)) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data deleted!</div>');
+        $response = $this->client_m->delete_client($id);
+        if (!$response->error) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
             redirect(base_url('client'));
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to delete data!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
             redirect(base_url('client'));
         }
     }

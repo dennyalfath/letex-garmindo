@@ -5,43 +5,126 @@ class Client_M extends CI_Model
 {
     public function get_all_client()
     {
-        $this->db->select('tb_company.*, tb_client.client_id, tb_client.client_name, tb_client.client_contact, tb_client.client_date_register, tb_client.company_id');
-        $this->db->join('tb_company', 'tb_client.company_id = tb_company.company_id', 'left');
-        return $this->db->get('tb_client')->result();
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/client/read.php",
+            CURLOPT_RETURNTRANSFER => true,
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function get_client_list()
     {
-        $this->db->select('client_id, client_name');
-        return $this->db->get('tb_client')->result();
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/client/read_client_list.php",
+            CURLOPT_RETURNTRANSFER => true,
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function get_client_by_id($id)
     {
-        $this->db->where('client_id', $id);
-        return $this->db->get('tb_client')->row();
+        $curl = curl_init();
+        $data = array(
+            'client_id' => $id
+        );
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/client/read.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function get_client_by_cpid($cpid)
     {
-        $this->db->where('company_id', $cpid);
-        return $this->db->get('tb_client')->result();
+        $curl = curl_init();
+        $data = array(
+            'company_id' => $cpid
+        );
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/client/read_by_company.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function insert_client($data)
     {
-        return $this->db->insert('tb_client', $data);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/client/insert.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
-    public function update_client($id, $data)
+    public function update_client($data)
     {
-        $this->db->where('client_id', $id);
-        return $this->db->update('tb_client', $data);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/client/update.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 
     public function delete_client($id)
     {
-        $this->db->where('client_id', $id);
-        return $this->db->delete('tb_client');
+        $curl = curl_init();
+
+        $data = array(
+            'client_id' => $id
+        );
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "http://localhost/letex-garmindo-api/client/delete.php",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        return json_decode($response);
     }
 }
