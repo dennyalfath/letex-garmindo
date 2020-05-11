@@ -63,11 +63,12 @@ class Product extends CI_Controller
                 'pr_picture' => $this->upload_image()
             );
 
-            if ($this->product_m->insert_product($data)) {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data saved!</div>');
+            $response = $this->product_m->insert_product($data);
+            if (!$response->error) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
                 redirect(base_url('product'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to save data!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
                 redirect(base_url('product/add'));
             }
         }
@@ -120,6 +121,7 @@ class Product extends CI_Controller
             $pr_picture = $this->upload_image($id);
             if ($pr_picture) {
                 $data = array(
+                    'pr_id' => $id,
                     'client_id' => $this->input->post('pr_client'),
                     'cat_id' => $this->input->post('pr_category'),
                     'pr_name' => $this->input->post('pr_name'),
@@ -130,20 +132,23 @@ class Product extends CI_Controller
                 );
             } else {
                 $data = array(
+                    'pr_id' => $id,
                     'client_id' => $this->input->post('pr_client'),
                     'cat_id' => $this->input->post('pr_category'),
                     'pr_name' => $this->input->post('pr_name'),
                     'style' => $this->input->post('style'),
                     'sell_price' => $this->input->post('sell_price'),
-                    'pr_description' => $this->input->post('desc')
+                    'pr_description' => $this->input->post('desc'),
+                    'pr_picture' => ''
                 );
             }
 
-            if ($this->product_m->update_product($id, $data)) {
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data updated!</div>');
+            $response = $this->product_m->update_product($data);
+            if (!$response->error) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
                 redirect(base_url('product'));
             } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to update data!</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
                 redirect(base_url('product/edit/' . $id));
             }
         }
@@ -151,11 +156,12 @@ class Product extends CI_Controller
 
     public function destroy($id)
     {
-        if ($this->product_m->delete_product($id)) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data deleted!</div>');
+        $response = $this->product_m->delete_product($id);
+        if (!$response->error) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
             redirect(base_url('product'));
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to delete data!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
             redirect(base_url('product'));
         }
     }

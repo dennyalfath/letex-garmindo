@@ -25,7 +25,7 @@
                             <td><?php echo $pr->client_name ?></td>
                             <td><?php echo $pr->cat_name ?></td>
                             <td><?php echo $pr->style ?></td>
-                            <td><?php echo $pr->sell_price ?></td>
+                            <td><?php echo number_format($pr->sell_price) ?></td>
                             <td width="10%"><img src="<?php echo base_url('uploads/product-image/' . $pr->pr_picture) ?>" width="60%"></td>
                             <td>
                                 <a href="<?php echo base_url('product/edit/' . $pr->pr_id) ?>" class="btn btn-sm btn-warning">Modify</a>
