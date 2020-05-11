@@ -68,19 +68,6 @@ class SalesOrder_M extends CI_Model
         return $this->db->get('tb_sales_order_detail')->num_rows();
     }
 
-    public function get_company_by_clid($client)
-    {
-        //Get client data to find the company id
-        $this->db->where('client_id', $client);
-        $client_data = $this->db->get('tb_client')->row();
-
-        //Get company SO Number based on company id
-        $this->db->select('so_number, company_code, company_id');
-        $this->db->where('company_id', $client_data->company_id);
-        $response = $this->db->get('tb_company')->row();
-        return $response;
-    }
-
     public function insert_sales_order($data)
     {
         return $this->db->insert('tb_sales_order', $data);

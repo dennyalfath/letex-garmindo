@@ -47,9 +47,11 @@ class SalesOrder extends CI_Controller
 
     public function get_company_so()
     {
-        $client = $this->input->post('client');
-        $data = $this->salesorder_m->get_company_by_clid($client);
-        echo json_encode($data);
+        $client_id = $this->input->post('client');
+
+        $client = $this->client_m->get_client_by_id($client_id);
+        $company = $this->company_m->get_company_by_id($client->company_id);
+        echo json_encode($company);
     }
 
     public function store()
