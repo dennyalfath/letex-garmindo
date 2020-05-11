@@ -40,31 +40,29 @@ class Auth extends CI_Controller
             $username = $this->input->post('username');
             $password = md5($this->input->post('password'));
 
-            $cek = $this->users_m->get_by_login_data($username, $password);
-            if ($cek->num_rows() > 0) {
-                foreach ($cek->result() as $qad) {
-                    if ($qad->block == 'N') {
-                        $sess_data['user_id'] = $qad->user_id;
-                        $sess_data['username'] = $username;
-                        $sess_data['role'] = $qad->role;
-                        $this->session->set_userdata($sess_data);
-                        if ($qad->role == 'superadmin') {
-                            redirect(base_url('superadmin'));
-                        } else if ($qad->role == 'admin') {
-                            redirect(base_url('admin'));
-                        } else if ($qad->role == 'manager') {
-                            redirect(base_url('manager'));
-                        } else if ($qad->role == 'drafter') {
-                            redirect(base_url('drafter'));
-                        } else if ($qad->role == 'tailor') {
-                            redirect(base_url('tailor'));
-                        } else if ($qad->role == 'packing') {
-                            redirect(base_url('packing'));
-                        }
-                    } else {
-                        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun anda belum divalidasi!</div>');
-                        redirect(base_url('auth'));
+            $data = $this->users_m->get_by_login_data($username, $password);
+            if ($data->user_id) {
+                if ($data->block == 'N') {
+                    $sess_data['user_id'] = $data->user_id;
+                    $sess_data['username'] = $username;
+                    $sess_data['role'] = $data->role;
+                    $this->session->set_userdata($sess_data);
+                    if ($data->role == 'superadmin') {
+                        redirect(base_url('superadmin'));
+                    } else if ($data->role == 'admin') {
+                        redirect(base_url('admin'));
+                    } else if ($data->role == 'manager') {
+                        redirect(base_url('manager'));
+                    } else if ($data->role == 'drafter') {
+                        redirect(base_url('drafter'));
+                    } else if ($data->role == 'tailor') {
+                        redirect(base_url('tailor'));
+                    } else if ($data->role == 'packing') {
+                        redirect(base_url('packing'));
                     }
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Akun anda belum divalidasi!</div>');
+                    redirect(base_url('auth'));
                 }
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username atau password salah!</div>');
@@ -97,7 +95,9 @@ class Auth extends CI_Controller
         // Ambil data dari form input
         $data = array(
             'username' => $this->input->post('username', TRUE),
-            'password' => md5($this->input->post('password', TRUE))
+            'password' => md5($this->input->post('password', TRUE)),
+            'role' => '',
+            'block' => ''
         );
 
         if ($this->form_validation->run() == FALSE) {

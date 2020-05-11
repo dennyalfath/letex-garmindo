@@ -61,26 +61,29 @@ class Superadmin extends CI_Controller
     public function updateuser($id)
     {
         $data = array(
+            'user_id' => $id,
             'role' => $this->input->post('role'),
             'block' => $this->input->post('block')
         );
 
-        if ($this->users_m->update_user($id, $data)) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan!</div>');
+        $response = $this->users_m->update_user($data);
+        if (!$response->error) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
             redirect(base_url('superadmin/usermanage'));
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal disimpan!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
             redirect(base_url('superadmin/edituser/' . $id));
         }
     }
 
     public function deleteuser($id)
     {
-        if ($this->users_m->delete_user($id)) {
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
+        $response = $this->users_m->delete_user($id);
+        if (!$response->error) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">' . $response->message . '</div>');
             redirect(base_url('superadmin/usermanage'));
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Data gagal dihapus!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $response->message . '</div>');
             redirect(base_url('superadmin/usermanage'));
         }
     }
