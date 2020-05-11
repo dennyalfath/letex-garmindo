@@ -1,7 +1,7 @@
 <div class="content">
     <div class="container-fluid">
         <form action="<?php echo base_url('salesorder/store_detail') ?>" method="POST">
-            <div class="card">
+            <div class="card" id="1">
                 <div class="card-header">
                     <h5 class="card-title font-weight-bold">Item 1</h5>
                 </div>
@@ -18,7 +18,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="product">Product</label>
-                                <select name="sod_product[]" class="form-control" required>
+                                <select name="sod_product[]" id="sod_product" class="form-control" required>
                                     <option value="0">-- Select Product --</option>
                                     <?php foreach ($product as $pr) : ?>
                                         <option value="<?php echo $pr->pr_id ?>"><?php echo $pr->pr_name ?></option>
@@ -35,7 +35,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="sod_price">Price</label>
-                                <input type="text" class="form-control" name="sod_price[]">
+                                <input type="text" class="form-control" name="sod_price[]" id="sod_price">
                             </div>
                         </div>
                         <div class="col-md-3">

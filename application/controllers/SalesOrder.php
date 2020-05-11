@@ -54,6 +54,14 @@ class SalesOrder extends CI_Controller
         echo json_encode($company);
     }
 
+    public function get_product()
+    {
+        $pr_id = $this->input->post('product');
+
+        $product = $this->product_m->get_product_by_id($pr_id);
+        echo json_encode($product);
+    }
+
     public function store()
     {
         $this->form_validation->set_rules('so_number', 'SO Number', 'required');

@@ -81,6 +81,30 @@
             }
         });
     });
+    $(document).on('change', '#sod_product', function() {
+        var product = $(this).val();
+        var card = $(this).closest(".card");
+
+        //AJAX REQUEST
+        if (product) {
+            $.ajax({
+                url: '<?php echo base_url('salesorder/get_product') ?>',
+                method: 'post',
+                data: {
+                    product: product
+                },
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    var sell_price = parseInt(data['sell_price']);
+                    if (!sell_price) {
+                        sell_price = 0;
+                    }
+                    $(card).find('#sod_price').val(sell_price);
+                }
+            });
+        }
+    });
 </script>
 
 <script>
@@ -91,7 +115,7 @@
             // Kita akan menambahkan form dengan menggunakan append      
             // pada sebuah tag div yg kita beri id insert-form      
             $("#insert-form").append(
-                '<div class="card">' + '<div class="card-header">' + '<h5 class="card-title font-weight-bold">' + 'Item ' + nextform + '</h5>' + '</div>' +
+                '<div class="card" id=' + nextform + '>' + '<div class="card-header">' + '<h5 class="card-title font-weight-bold">' + 'Item ' + nextform + '</h5>' + '</div>' +
 
                 '<div class="card-body">' +
 
@@ -99,11 +123,11 @@
 
                 '<div class="col-md-3">' + ' <div class="form-group">' + ' <label for="so_number">SO. Number</label>' + '<input type="text" class="form-control" name="sod_so_number[]" value="<?php echo $salesorder->so_number ?>" readonly required>' + '</div>' + '</div>' +
 
-                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="product">Product</label>' + '<select name="sod_product[]" class="form-control" required>' + '<option value="0">-- Select Product --</option>' + '<?php foreach ($product as $pr) : ?>' + ' <option value="<?php echo $pr->pr_id ?>"><?php echo $pr->pr_name ?></option>' + ' <?php endforeach; ?>' + '</select>' + ' </div>' + ' </div>' +
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="product">Product</label>' + '<select name="sod_product[]" id="sod_product" class="form-control" required>' + '<option value="0">-- Select Product --</option>' + '<?php foreach ($product as $pr) : ?>' + ' <option value="<?php echo $pr->pr_id ?>"><?php echo $pr->pr_name ?></option>' + ' <?php endforeach; ?>' + '</select>' + ' </div>' + ' </div>' +
 
                 '<div class="col-md-3">' + '<div class="form-group">' + '<label for="qty">Quantity</label>' + '<input type="text" class="form-control" name="sod_qty[]" required>' + '</div>' + '</div>' +
 
-                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="sod_price">Price</label>' + '<input type="number" class="form-control" name="sod_price[]">' + '</div>' + '</div>' +
+                '<div class="col-md-3">' + '<div class="form-group">' + '<label for="sod_price">Price</label>' + '<input type="number" class="form-control" name="sod_price[]" id="sod_price">' + '</div>' + '</div>' +
 
                 '<div class="col-md-3">' + '<div class="form-group">' + '<label for="remark_size">Remark Size</label>' + '<input type="text" class="form-control" name="sod_remark_size[]" required>' + '</div>' + '</div>' +
 
