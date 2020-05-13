@@ -33,7 +33,7 @@ class Product extends CI_Controller
     {
         $data = array(
             'title' => 'Add Product',
-            'client' => $this->client_m->get_client_list(),
+            'client' => $this->client_m->get_all_client(),
             'category' => $this->category_m->get_all_category()
         );
 
@@ -97,7 +97,7 @@ class Product extends CI_Controller
         $data = array(
             'title' => 'Modify Product Data',
             'product' => $product,
-            'client' => $this->client_m->get_client_list(),
+            'client' => $this->client_m->get_all_client(),
             'category' => $this->category_m->get_all_category(),
             'clientpil' => $product->client_id,
             'categorypil' => $product->cat_id

@@ -18,21 +18,6 @@ class Client_M extends CI_Model
         return json_decode($response);
     }
 
-    public function get_client_list()
-    {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://localhost/letex-garmindo-api/client/read_client_list.php",
-            CURLOPT_RETURNTRANSFER => true,
-        ));
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-
-        return json_decode($response);
-    }
-
     public function get_client_by_id($id)
     {
         $curl = curl_init();
